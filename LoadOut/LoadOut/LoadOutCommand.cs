@@ -4,9 +4,26 @@ using Rocket.Unturned.Commands;
 using Rocket.Unturned.Player;
 using UnityEngine;
 
-// static imports directly into our namespace.. So I can just Log(blah) as if it's a local func
 using static Rocket.Unturned.RocketChat;
 using static Rocket.Unturned.Logging.Logger;
+
+/*  All code is copyright © 2015 Auria.pw
+    Code, and their compiled assemblies, are released (forcefully)
+    under the GNU GPL. By using any of this code and/or software
+    you agree to hold indemnify the author and any associated
+    peoples from which this software was obtained.
+    
+    This disclaimer/notice is to be maintained in all source files
+    and the author tags are not to be removed from unmodified versions
+    of this software.
+
+    - Mash    
+    
+    Rocket   - copyright © 2015 ROCKET FOUNDATION
+    Unturned - copyright © 2015 Smartly Dressed Games
+    Unity    - Copyright © 2015 Unity Technologies
+    */
+
 
 namespace Rocket.Mash.LoadOut {
     public class LoadOutCommand : IRocketCommand {
@@ -25,10 +42,7 @@ namespace Rocket.Mash.LoadOut {
 
         public List<string> Aliases {
             get {
-                //if (LoadOut.Instance.Configuration.OverrideKitCommand)
                     return new List<String>() { "lo", "kit" };
-                //else
-                //    return new List<String>() { "lo", };
                 }
             }
 
