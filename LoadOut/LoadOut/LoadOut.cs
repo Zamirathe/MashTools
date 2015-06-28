@@ -5,8 +5,6 @@ using UnityEngine;
 using Rocket.Unturned.Plugins;
 using Rocket.Unturned.Player;
 
-using SDG;
-
 using static Rocket.Unturned.Logging.Logger;
 using static Rocket.Unturned.RocketChat;
 
@@ -27,10 +25,9 @@ using static Rocket.Unturned.RocketChat;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-
 namespace Rocket.Mash.LoadOut {
     public class LoadOut : RocketPlugin<LoadOutConf> {
-        public static Version Version = new Version(0, 0, 1, 0);
+        public static Version Version = new Version(0, 0, 2, 0);
         public static LoadOut Instance;
 
         private List<int> IndexesToRemove;
