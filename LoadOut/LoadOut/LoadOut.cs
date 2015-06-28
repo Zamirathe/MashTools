@@ -33,11 +33,16 @@ namespace Rocket.Mash.LoadOut {
         public static Version Version = new Version(0, 0, 1, 0);
         public static LoadOut Instance;
 
+        private List<int> IndexesToRemove;
+
         private List<LoadOutQueue> _playerQueue;
+
+        private bool ErrOnLoop = false;
 
         protected override void Load() {
             Instance = this;
             _playerQueue = new List<LoadOutQueue>();
+            IndexesToRemove = new List<int>();
             hookEvents();
             Log(this.Configuration.LoadedText);
             }
@@ -50,23 +55,49 @@ namespace Rocket.Mash.LoadOut {
         public void FixedUpdate() {
 
             if (this.Loaded && this.Configuration.Enabled && _playerQueue.Count > 0) {
-                int Index = -1;
 
                 foreach (LoadOutQueue que in _playerQueue) {
-                    if (DateTime.Now < que.TimeToLoadOut)
-                        continue;
+                    try {
+                        if (que.Player == null) {
+                            IndexesToRemove.Add(_playerQueue.IndexOf(que));
+                            continue;
+                            }
 
-                    Index = _playerQueue.IndexOf(que);
-                    foreach (LoadOutEquip loe in this.Configuration.LoadOutEquipment) {
-                        if (!que.Player.GiveItem(loe.EntityId, loe.EntityAmount))
-                            LogError($"LoadOut> Failed to give {que.Player.CharacterName} item {loe.EntityId} x {loe.EntityAmount}.");
+                        if (DateTime.Now < que.TimeToLoadOut)
+                            continue;
+
+                        IndexesToRemove.Add(_playerQueue.IndexOf(que));
+
+                        foreach (LoadOutEquip loe in this.Configuration.LoadOutEquipment) {
+                            if (que.Player?.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
+                                LogError($"LoadOut> Failed to give {que.Player.CharacterName} item {loe.EntityId} x {loe.EntityAmount}.");
+                                }
+                            }
+                        Say(que.Player, this.Configuration.LoadOutGivenMessage, Color.yellow);
+
+                      } catch {
+
+                        if (ErrOnLoop)
+                            CriticalError();
+
+                        ErrOnLoop = true;
+                        IndexesToRemove.Add(_playerQueue.IndexOf(que));
                         }
-                    Say(que.Player, this.Configuration.LoadOutGivenMessage, Color.yellow);
-                    }
 
-                if (Index >= 0)
-                    _playerQueue.RemoveAt(Index);
+                    } 
+
+                foreach(int i in IndexesToRemove)
+                    _playerQueue.RemoveAt(i);
+
+                IndexesToRemove.Clear();
+
                 }
+            }
+
+        private void CriticalError() {
+            Say("LoadOut has stopped due to an error.", Color.red);
+            this.Configuration.Enabled = false;
+            _playerQueue.Clear();
             }
 
         private void hookEvents() {

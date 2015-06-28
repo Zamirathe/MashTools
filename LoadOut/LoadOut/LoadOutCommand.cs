@@ -48,6 +48,9 @@ namespace Rocket.Mash.LoadOut {
 
         public void Execute(RocketPlayer player, string[] cmd) {
 
+            if (player == null)
+                return;
+
             if (!player.HasPermission("LoadOut") && !player.HasPermission("*")) {
                 Say(player, LoadOut.Instance.Configuration.AccessDeniedMessage, Color.red);
                 Log($"LoadOut> {player.CharacterName} doesn't have permission.");
