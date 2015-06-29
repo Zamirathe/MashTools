@@ -50,7 +50,6 @@ namespace Rocket.Mash.DeathAnnounce {
             }
 
         private void DA_OnPlayerDeath(RocketPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer) {
-
             DAUserMsg DAMsg = null;
             string Msg = string.Empty;
             string Name = RocketPlayer.FromCSteamID(murderer).CharacterName;
@@ -67,7 +66,7 @@ namespace Rocket.Mash.DeathAnnounce {
             Msg = DAMsg.CMessage.Replace("{0}", Name);
 
             Say($"{player.CharacterName} {Msg}", DAMsg.CColor);
-            
+            Log($"{player.CharacterName} {Msg} ({DAMsg.CColor})");
             }
 
         }
