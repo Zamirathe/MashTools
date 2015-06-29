@@ -24,7 +24,6 @@ using System.Collections.Generic;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-
 namespace Rocket.Mash.DeathAnnounce {
     public class DeathAnnounce : RocketPlugin<DeathAnnounceConf> {
         public static System.Version Version = new System.Version(0, 0, 1, 0);

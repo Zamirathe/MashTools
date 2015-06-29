@@ -23,11 +23,8 @@ using UnityEngine;
 
 namespace Rocket.Mash.DeathAnnounce {
     public class DeathAnnounceConf : IRocketPluginConfiguration {
-
-        public List<DAUserMsg> UserMessages;
-
         public bool Enabled;
-
+        public List<DAUserMsg> UserMessages;
         public string LoadedText { get { return $"{DeathAnnounce.Version} by Mash"; } }
 
         public IRocketPluginConfiguration DefaultConfiguration {
