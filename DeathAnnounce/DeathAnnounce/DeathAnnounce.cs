@@ -66,7 +66,7 @@ namespace Rocket.Mash.DeathAnnounce {
 
             Msg = DAMsg.CMessage.Replace("{0}", Name);
 
-            Say($"{player.CharacterName} ", DAMsg.CColor);
+            Say($"{player.CharacterName} {Msg}", DAMsg.CColor);
             
             }
 
