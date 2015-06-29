@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeathAnnounce\DAUserMsg.cs" />
     <Compile Include="DeathAnnounce\DeathAnnounce.cs" />
     <Compile Include="DeathAnnounce\DeathAnnounceConf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

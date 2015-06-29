@@ -51,27 +51,24 @@ namespace Rocket.Mash.DeathAnnounce {
 
         private void DA_OnPlayerDeath(RocketPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer) {
 
-            Say($"{player.CharacterName} {Instance.Translate(cause.ToString().ToUpper())}", Color.grey);
+            DAUserMsg DAMsg = null;
+            string Msg = string.Empty;
+            string Name = RocketPlayer.FromCSteamID(murderer).CharacterName;
+            
+            foreach (DAUserMsg daum in Configuration.UserMessages)
+                if (daum.Cause.ToUpper() == cause.ToString().ToUpper())
+                    DAMsg = daum;                    
+
+            if (DAMsg == null) {
+                Log($"DeathAnnounce: UserMessage was empty for cause '{cause.ToString().ToUpper()}'");
+                return;
+                }
+
+            Msg = DAMsg.CMessage.Replace("{0}", Name);
+
+            Say($"{player.CharacterName} ", DAMsg.CColor);
             
             }
 
-        public override Dictionary<string, string> DefaultTranslations {
-            get {
-                return new Dictionary<string, string>() {
-                        { "BLEEDING", "bled out." },
-                        { "BONES", "fell to pieces." },
-                        { "FREEZING", "turned into a popsicle." },
-                        { "FOOD", "starved to death." },
-                        { "WATER", "died of thirst." },
-                        { "GUN", "was shot dead." },
-                        { "MELEE", "got the axe." },
-                        { "ZOMBIE", "tried making out with a zombie." },
-                        { "SUICIDE", "just couldn't take it anymore." },
-                        { "KILL", "was killed." },
-                        { "INFECTION", "died of zombgreen." },
-                        { "PUNCH", "got knocked out." }
-                    };
-                }
-            }
         }
     }
