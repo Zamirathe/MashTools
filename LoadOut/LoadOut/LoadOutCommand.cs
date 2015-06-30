@@ -78,16 +78,16 @@ namespace Rocket.Mash.LoadOut {
                 return;
                 }
 
-            if (cmd.Length == 0) {
+            if (cmd.Length <= 1) {
                 Log($"LoadOut> Called by {player.CharacterName}");
                 player.GetComponent<LoadOutComp>().AskLoadOut();
                 } else {
                 Log("cmd.Length > 0");
                 if (player.HasPermission("LoadOut.Other") || player.HasPermission("*")) {
                     Log("Has permission to give other.");
-                    if (RocketPlayer.FromName(cmd[0]) != null) {
+                    if (RocketPlayer.FromName(cmd[1]) != null) {
                         Log("RP.FromName != null");
-                        RocketPlayer p = RocketPlayer.FromName(cmd[0]);
+                        RocketPlayer p = RocketPlayer.FromName(cmd[1]);
                         if (p != null) {
                             p.GetComponent<LoadOutComp>().AskLoadOut(p);
                             }
