@@ -30,81 +30,39 @@ namespace Rocket.Mash.LoadOut {
         public static Version Version = new Version(0, 0, 2, 0);
         public static LoadOut Instance;
 
-        private List<int> IndexesToRemove;
-
-        private List<LoadOutQueue> _playerQueue;
-
-        private bool ErrOnLoop = false;
+        public static LoadOutCommand LoadOutCmd;
 
         protected override void Load() {
             Instance = this;
-            _playerQueue = new List<LoadOutQueue>();
-            IndexesToRemove = new List<int>();
-            hookEvents();
+            HookEvents();
             Log(this.Configuration.LoadedText);
-            
             }
 
         protected override void Unload() {
-            unregisterEvents();
+            UnregisterEvents();
             base.Unload();
             }
         
         public void FixedUpdate() {
-
-            if (this.Loaded && this.Configuration.Enabled && _playerQueue.Count > 0) {
-
-                foreach (LoadOutQueue que in _playerQueue) {
-                    try {
-                        if (que.Player == null) {
-                            IndexesToRemove.Add(_playerQueue.IndexOf(que));
-                            continue;
-                            }
-
-                        if (DateTime.Now < que.TimeToLoadOut)
-                            continue;
-
-                        IndexesToRemove.Add(_playerQueue.IndexOf(que));
-
-                        foreach (LoadOutEquip loe in this.Configuration.LoadOutEquipment) {
-                            if (que.Player?.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
-                                LogError($"LoadOut> Failed to give {que.Player.CharacterName} item {loe.EntityId} x {loe.EntityAmount}.");
-                                }
-                            }
-                        Say(que.Player, this.Configuration.LoadOutGivenMessage, Color.yellow);
-
-                      } catch {
-
-                        if (ErrOnLoop)
-                            CriticalError();
-
-                        ErrOnLoop = true;
-                        IndexesToRemove.Add(_playerQueue.IndexOf(que));
-                        }
-
-                    } 
-
-                foreach(int i in IndexesToRemove)
-                    _playerQueue.RemoveAt(i);
-
-                IndexesToRemove.Clear();
-
-                }
+            //if (this.Loaded && this.Configuration.Enabled && PlayerQueue.Count > 0) {
+            //    //ProcessLoadOuts();
+            //    }
             }
 
-        private void CriticalError() {
-            Say("LoadOut has stopped due to an error.", Color.red);
-            this.Configuration.Enabled = false;
-            _playerQueue.Clear();
+        private void HookEvents() {
+            Unturned.Events.RocketPlayerEvents.OnPlayerRevive += EventPlayerSpawn;
+            Unturned.Events.RocketServerEvents.OnPlayerConnected += EventPlayerConnected;
+            Unturned.Events.RocketServerEvents.OnServerShutdown += EventServerShutdown;
             }
 
-        private void hookEvents() {
-            Unturned.Events.RocketPlayerEvents.OnPlayerRevive += eventPlayerSpawn;
-            Unturned.Events.RocketServerEvents.OnPlayerConnected += eventPlayerConnected;
-            Unturned.Events.RocketServerEvents.OnServerShutdown += eventServerShutdown;
+        private void UnregisterEvents() {
+            Unturned.Events.RocketPlayerEvents.OnPlayerRevive -= EventPlayerSpawn;
+            Unturned.Events.RocketServerEvents.OnServerShutdown -= EventServerShutdown;
             }
 
-        private void eventPlayerConnected(RocketPlayer player) {
+        private void EventPlayerConnected(RocketPlayer player) {
+
+            player.GetComponent<LoadOutComp>().Available = DateTime.Now;
 
             int items = 0;
             foreach (SDG.Unturned.Items i in player.Inventory.Items) {
@@ -118,33 +76,64 @@ namespace Rocket.Mash.LoadOut {
 
             }
 
-        private void unregisterEvents() {
-            Unturned.Events.RocketPlayerEvents.OnPlayerRevive -= eventPlayerSpawn;
-            Unturned.Events.RocketServerEvents.OnServerShutdown -= eventServerShutdown;
+        private void EventServerShutdown() {
+            UnregisterEvents();
             }
 
-        private void eventServerShutdown() {
-            unregisterEvents();
+        private void EventPlayerSpawn(RocketPlayer player, Vector3 position, byte angle) {
+            //GrantLoadOut(player);
+            player.GetComponent<LoadOutComp>().Timer.Start();
+            }
+                
+        private void ProcessLoadOuts() {
+            //foreach (LoadOutQueue que in PlayerQueue) {
+            //    try {
+            //        if (que.Player == null) {
+            //            IndexesToRemove.Add(PlayerQueue.IndexOf(que));
+            //            continue;
+            //            }
+            //        if (DateTime.Now < que.TimeToLoadOut) continue;
+            //        IndexesToRemove.Add(PlayerQueue.IndexOf(que));
+            //        foreach (LoadOutEquip loe in this.Configuration.LoadOutEquipment) {
+            //            if (que.Player?.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
+            //                LogError($"LoadOut> Failed to give {que.Player.CharacterName} item {loe.EntityId} x {loe.EntityAmount}.");
+            //                }
+            //            }
+            //        Say(que.Player, this.Configuration.LoadOutGivenMessage, Color.yellow);
+            //        } catch {
+            //        if (ErrOnLoop) CriticalError();
+            //        ErrOnLoop = true;
+            //        IndexesToRemove.Add(PlayerQueue.IndexOf(que));
+            //        }
+            //    }
+            //foreach (int i in IndexesToRemove)
+            //    PlayerQueue.RemoveAt(i);
+            //IndexesToRemove.Clear();
             }
 
-        private void eventPlayerSpawn(RocketPlayer player, Vector3 position, byte angle) {
-            GrantLoadOut(player);
+        private void CriticalError() {
+            Say("LoadOut has stopped due to an error.", Color.red);
+            this.Configuration.Enabled = false;
             }
 
         public void GrantLoadOut(RocketPlayer player, bool instant = false) {
-            DateTime ttl;
+            //DateTime ttl;
 
-            if (instant)
-                ttl = DateTime.Now;
-            else
-                ttl = DateTime.Now.AddSeconds(this.Configuration.SpawnDelay);
+            //if (instant)
+            //    ttl = DateTime.Now;
+            //else
+            //    ttl = DateTime.Now.AddSeconds(this.Configuration.SpawnDelay);
 
-            _playerQueue.Add(
-                    new LoadOutQueue() {
-                        Player = player,
-                        TimeToLoadOut = ttl,
-                        });
+            //player.GetComponent<LoadOutCooldown>().
+
+            //PlayerQueue.Add(
+            //        new LoadOutQueue() {
+            //            Player = player,
+            //            TimeToLoadOut = ttl,
+            //            });
             }
+
+
 
         }
 

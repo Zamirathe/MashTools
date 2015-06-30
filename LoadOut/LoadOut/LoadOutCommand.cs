@@ -7,6 +7,7 @@ using UnityEngine;
 using static Rocket.Unturned.RocketChat;
 using static Rocket.Unturned.Logging.Logger;
 using Rocket.API;
+using SDG.Unturned;
 
 /*  All code is copyright © 2015 Auria.pw
     Code, and their compiled assemblies, are released (forcefully)
@@ -28,9 +29,8 @@ using Rocket.API;
 namespace Rocket.Mash.LoadOut {
     public class LoadOutCommand : IRocketCommand {
 
-        private Dictionary<RocketPlayer, DateTime> CooldownList;
         private bool Initialized = false;
-        LoadOutConf Config;
+        private LoadOutConf Config;
 
         #region CmdConf
         public bool RunFromConsole { get { return false; } }
@@ -47,55 +47,47 @@ namespace Rocket.Mash.LoadOut {
 
         public List<string> Aliases {
             get {
-                    return new List<String>() { "lo", "kit" };
+                return new List<String>() { "lo" };
                 }
             }
 
         #endregion CmdConf
 
         private void Initialize() {
-            CooldownList = new Dictionary<RocketPlayer, DateTime>();
             Initialized = true;
             Config = LoadOut.Instance.Configuration;
             }
 
         public void Execute(RocketPlayer player, string[] cmd) {
-
             if (!Initialized)
                 Initialize();
 
             if (player == null)
                 return;
 
-            if (cmd?.Length == 0) {
-                if (!player.HasPermission("LoadOut") && !player.HasPermission("*")) {
-                    Say(player, Config.AccessDeniedMessage, Color.red);
-                    Log($"LoadOut> {player.CharacterName} doesn't have permission.");
-                    return;
-                    }
-
-                if (!Config.AllowFromCommand) {
-                    Say(player, Config.CommandDisabledMessage, Color.yellow);
-                    return;
-                    }
-
-                Log($"LoadOut> Called by {player.CharacterName}");
-
-                if (CooldownList.ContainsKey(player)) {
-                    if (CooldownList[player] < DateTime.Now) {
-                        Say(player, $"LoadOut ready in {((int)(CooldownList[player] - DateTime.Now).TotalSeconds).ToString()} seconds.", Config.ErrorColor);
-                        return;
-                        } else {
-                        CooldownList.Remove(player);
-                        }
-                    }
-
-                CooldownList.Add(player, DateTime.Now.AddSeconds(Config.CommandCooldown));
-                LoadOut.Instance.GrantLoadOut(player, true);
+            if (!Config.AllowFromCommand) {
+                Say(player, Config.CommandDisabledMessage, Config.ErrorColor);
+                return;
                 }
 
+            if (!player.HasPermission("LoadOut") && !player.HasPermission("*")) {
+                Say(player, Config.AccessDeniedMessage, Color.red);
+                Log($"LoadOut> {player.CharacterName} doesn't have permission.");
+                return;
+                }
 
-
+            if (cmd?.Length == 0) {
+                Log($"LoadOut> Called by {player.CharacterName}");
+                player.GetComponent<LoadOutComp>().AskLoadOut();
+                } else {
+                if (player.HasPermission("LoadOut.Other")) {
+                    if (RocketPlayer.FromName(cmd[0]) != null) {
+                        RocketPlayer p = RocketPlayer.FromName(cmd[0]);
+                        p.GetComponent<LoadOutComp>().AskLoadOut(p.CharacterName);
+                        }
+                    }
+                }
             }
+
         }
     }

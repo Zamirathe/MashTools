@@ -1,4 +1,5 @@
 ﻿using Rocket.API;
+using Rocket.Unturned.Player;
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -28,28 +29,38 @@ namespace Rocket.Mash.LoadOut {
         public bool AllowFromCommand;
         public string LoadOutCommand;
         public int CommandCooldown;
-        public string CommandCooldownNotReadyMessage;
-
-        [XmlElement("ErrorColor")]
-        public string ErrColor;
-
+        public string NotReadyMessage;
         public string LoadOutGivenMessage;
         public string AccessDeniedMessage;
         public string CommandDisabledMessage;
-        public string AllowFromCommandAnnounceMessage;
-        public bool OverrideKitCommand;
+        [XmlElement("ErrorColor")]
+        public string EColor;
+        [XmlElement("LoadOutGivenColor")]
+        public string SColor;
+        public string CommandAnnounceMessage;
+
         public List<LoadOutEquip> LoadOutEquipment;
+
+
+        [XmlIgnore]
+        public int FlushInterval = 5;
+        [XmlIgnore]
+        public string LoadedText { get { return $"{LoadOut.Version} by Mash"; } }
 
         public UnityEngine.Color ErrorColor {
             get {
-                if (ErrColor.Split(':').Length != 3)
+                if (EColor.Split(':').Length != 3)
                     return UnityEngine.Color.gray;
-                return StringToUEColor(ErrColor);
+                return StringToUEColor(EColor);
                 }
             }
-
-        [XmlIgnore]
-        public string LoadedText { get { return $"{LoadOut.Version} by Mash"; } }
+        public UnityEngine.Color SuccessColor {
+            get {
+                if (SColor.Split(':').Length != 3)
+                    return UnityEngine.Color.gray;
+                return StringToUEColor(SColor);
+                }
+            }
 
         public IRocketPluginConfiguration DefaultConfiguration {
             get {
@@ -61,10 +72,10 @@ namespace Rocket.Mash.LoadOut {
                     LoadOutGivenMessage = "You've got stuff!",
                     AccessDeniedMessage = "Insufficient permission.",
                     CommandDisabledMessage = "LoadOuts are join/spawn only.",
-                    AllowFromCommandAnnounceMessage = "Type /loadout to get some starting gear!",
-                    CommandCooldownNotReadyMessage = "LoadOut not ready for %S seconds.",
-                    ErrColor = "1.0:0.0:1.0",
-                    OverrideKitCommand = true,
+                    CommandAnnounceMessage = "Type /loadout to get some stuff!",
+                    NotReadyMessage = "LoadOut will be available in %S seconds.",
+                    EColor = "1.0:0.0:1.0",
+                    SColor = "0.0:0.8:0.0",
                     LoadOutEquipment = new List<LoadOutEquip>() {
                         new LoadOutEquip(97, 1),
                         new LoadOutEquip(15, 1),
