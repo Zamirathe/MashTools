@@ -27,7 +27,7 @@ CAUSE |STATIC|Type of death - DO NOT CHANGE
 Color |Float Array|Color in RGB, each value is a float from 0 to 1.0
 Message|String|Message displayed for this type of death
 AltMessage|String|Message displayed if message SHOULD have a "murderer" but doesn't.
-||Leave blank to disable.
+ | |Leave blank to disable.
 
 Variable|Value
 --------|-----
