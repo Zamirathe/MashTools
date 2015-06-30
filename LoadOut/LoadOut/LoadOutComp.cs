@@ -1,6 +1,6 @@
 ﻿using Rocket.Unturned.Player;
 using System;
-
+using System.Collections.Generic;
 using static Rocket.Unturned.Logging.Logger;
 using static Rocket.Unturned.RocketChat;
 
@@ -27,6 +27,7 @@ namespace Rocket.Mash.LoadOut {
         public DateTime Available;
         public System.Timers.Timer Timer;
 
+        private Dictionary<string, string> Translations;
         private LoadOutConf Config;
 
         private bool Active {
@@ -35,39 +36,50 @@ namespace Rocket.Mash.LoadOut {
 
         public void Start() {
             Config = LoadOut.Instance.Configuration;
+            Translations = LoadOut.Instance.Translations;
             Available = DateTime.Now;
             Timer = new System.Timers.Timer(LoadOut.Instance.Configuration.SpawnDelay * 1000);
             Timer.Elapsed += Timer_Elapsed;
             Timer.Start();
             }
 
-        public void AskLoadOut(string from = null) {
-            if (Available > DateTime.Now) {
-                string notReadyMsg = Config.CommandCooldownNotReadyMessage.Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
-                Say(Player, Config.CommandCooldownNotReadyMessage, Config.ErrorColor);
+        private void OnPlayerConnected(RocketPlayer player) {
+            throw new NotImplementedException();
+            }
+
+        public void AskLoadOut(RocketPlayer from = null) {
+            Say(Player, "we were asked loadout.");
+            if ((Available > DateTime.Now) && from == null) {
+                string notReadyMsg = Translations["not_ready"].Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
+                Say(Player, notReadyMsg, Config.ErrorColor);
                 } else {
+                Log("Avail<Now | from != null");
                 Available = DateTime.Now.AddSeconds(Config.CommandCooldown);
-                GiveLoadOut();
+                GiveLoadOut(from);
                 }
             }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
             Timer.Stop();
+            Log("Timer popped.");
             if (Active)
                 GiveLoadOut();
             }
 
-        private void GiveLoadOut() {
+        private void GiveLoadOut(RocketPlayer from = null) {
             foreach (LoadOutEquip loe in LoadOut.Instance.Configuration.LoadOutEquipment) {
                 if (Player.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
                     LogError($"LoadOut> Failed to give {Player.CharacterName} item {loe.EntityId} x{loe.EntityAmount}.");
+                    Say(from, Translations["error_message"], Config.ErrorColor);
                     }
                 }
 
-            Say(Player, Config.LoadOutGivenMessage, Config.SuccessColor);
-
+            if (from == null) {
+                Say(Player, Translations["loadout_given"], Config.SuccessColor);
+                } else {
+                Say(Player, Translations["loadout_gift"].Replace("%P", from.CharacterName), Config.SuccessColor);
+                Say(from, Translations["loadout_gift_success"].Replace("%P", Player.CharacterName), Config.SuccessColor);
+                }
             }
-
-
         }
     }

@@ -29,15 +29,10 @@ namespace Rocket.Mash.LoadOut {
         public bool AllowFromCommand;
         public string LoadOutCommand;
         public int CommandCooldown;
-        public string NotReadyMessage;
-        public string LoadOutGivenMessage;
-        public string AccessDeniedMessage;
-        public string CommandDisabledMessage;
         [XmlElement("ErrorColor")]
         public string EColor;
         [XmlElement("LoadOutGivenColor")]
         public string SColor;
-        public string CommandAnnounceMessage;
 
         public List<LoadOutEquip> LoadOutEquipment;
 
@@ -69,11 +64,6 @@ namespace Rocket.Mash.LoadOut {
                     AllowFromCommand = true,
                     CommandCooldown = 900,
                     SpawnDelay = 2,
-                    LoadOutGivenMessage = "You've got stuff!",
-                    AccessDeniedMessage = "Insufficient permission.",
-                    CommandDisabledMessage = "LoadOuts are join/spawn only.",
-                    CommandAnnounceMessage = "Type /loadout to get some stuff!",
-                    NotReadyMessage = "LoadOut will be available in %S seconds.",
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
                     LoadOutEquipment = new List<LoadOutEquip>() {
@@ -105,5 +95,6 @@ namespace Rocket.Mash.LoadOut {
 
             return retVal;
             }
+
         }
     }

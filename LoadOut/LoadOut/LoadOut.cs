@@ -7,6 +7,8 @@ using Rocket.Unturned.Player;
 
 using static Rocket.Unturned.Logging.Logger;
 using static Rocket.Unturned.RocketChat;
+using Rocket.Unturned;
+using SDG.Unturned;
 
 /*  All code is copyright © 2015 Auria.pw
     Code, and their compiled assemblies, are released (forcefully)
@@ -27,7 +29,7 @@ using static Rocket.Unturned.RocketChat;
 
 namespace Rocket.Mash.LoadOut {
     public class LoadOut : RocketPlugin<LoadOutConf> {
-        public static Version Version = new Version(0, 0, 2, 0);
+        public static Version Version = new Version(0, 0, 4, 6);
         public static LoadOut Instance;
 
         public static LoadOutCommand LoadOutCmd;
@@ -44,14 +46,11 @@ namespace Rocket.Mash.LoadOut {
             }
         
         public void FixedUpdate() {
-            //if (this.Loaded && this.Configuration.Enabled && PlayerQueue.Count > 0) {
-            //    //ProcessLoadOuts();
-            //    }
+            // don't need this anymore :o
             }
 
         private void HookEvents() {
             Unturned.Events.RocketPlayerEvents.OnPlayerRevive += EventPlayerSpawn;
-            Unturned.Events.RocketServerEvents.OnPlayerConnected += EventPlayerConnected;
             Unturned.Events.RocketServerEvents.OnServerShutdown += EventServerShutdown;
             }
 
@@ -60,55 +59,12 @@ namespace Rocket.Mash.LoadOut {
             Unturned.Events.RocketServerEvents.OnServerShutdown -= EventServerShutdown;
             }
 
-        private void EventPlayerConnected(RocketPlayer player) {
-
-            player.GetComponent<LoadOutComp>().Available = DateTime.Now;
-
-            int items = 0;
-            foreach (SDG.Unturned.Items i in player.Inventory.Items) {
-                items += i.getItemCount();
-                }
-
-            if (items == 0) {
-                Log($"{player.CharacterName}'s inventory empty, granting loadout.");
-                GrantLoadOut(player);
-                }
-
-            }
-
         private void EventServerShutdown() {
             UnregisterEvents();
             }
 
         private void EventPlayerSpawn(RocketPlayer player, Vector3 position, byte angle) {
-            //GrantLoadOut(player);
             player.GetComponent<LoadOutComp>().Timer.Start();
-            }
-                
-        private void ProcessLoadOuts() {
-            //foreach (LoadOutQueue que in PlayerQueue) {
-            //    try {
-            //        if (que.Player == null) {
-            //            IndexesToRemove.Add(PlayerQueue.IndexOf(que));
-            //            continue;
-            //            }
-            //        if (DateTime.Now < que.TimeToLoadOut) continue;
-            //        IndexesToRemove.Add(PlayerQueue.IndexOf(que));
-            //        foreach (LoadOutEquip loe in this.Configuration.LoadOutEquipment) {
-            //            if (que.Player?.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
-            //                LogError($"LoadOut> Failed to give {que.Player.CharacterName} item {loe.EntityId} x {loe.EntityAmount}.");
-            //                }
-            //            }
-            //        Say(que.Player, this.Configuration.LoadOutGivenMessage, Color.yellow);
-            //        } catch {
-            //        if (ErrOnLoop) CriticalError();
-            //        ErrOnLoop = true;
-            //        IndexesToRemove.Add(PlayerQueue.IndexOf(que));
-            //        }
-            //    }
-            //foreach (int i in IndexesToRemove)
-            //    PlayerQueue.RemoveAt(i);
-            //IndexesToRemove.Clear();
             }
 
         private void CriticalError() {
@@ -116,25 +72,22 @@ namespace Rocket.Mash.LoadOut {
             this.Configuration.Enabled = false;
             }
 
-        public void GrantLoadOut(RocketPlayer player, bool instant = false) {
-            //DateTime ttl;
-
-            //if (instant)
-            //    ttl = DateTime.Now;
-            //else
-            //    ttl = DateTime.Now.AddSeconds(this.Configuration.SpawnDelay);
-
-            //player.GetComponent<LoadOutCooldown>().
-
-            //PlayerQueue.Add(
-            //        new LoadOutQueue() {
-            //            Player = player,
-            //            TimeToLoadOut = ttl,
-            //            });
+        public override Dictionary<string, string> DefaultTranslations {
+            get {
+                return new Dictionary<string, string>() {
+                        { "loadout_given", "You've got stuff!" },
+                        { "loadout_gift", "It seems %P gave you some stuff." },
+                        { "loadout_gift_success", "LoadOut given to %P." },
+                        { "error_message", "An error occurred." },
+                        { "access_denied", "LoadOut.Self no permission." },
+                        { "access_denied_gift", "LoadOut.Gift no permission." },
+                        { "command_disabled", "LoadOuts are spawn only!" },
+                        { "command_announce", "Type /loadout to get some stuff!" },
+                        { "not_ready", "LoadOut will be available in %S seconds." },
+                    };
+                }
             }
-
-
-
+        
         }
 
     }

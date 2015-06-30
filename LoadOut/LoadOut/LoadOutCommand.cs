@@ -8,6 +8,7 @@ using static Rocket.Unturned.RocketChat;
 using static Rocket.Unturned.Logging.Logger;
 using Rocket.API;
 using SDG.Unturned;
+using Rocket.Unturned.Plugins;
 
 /*  All code is copyright © 2015 Auria.pw
     Code, and their compiled assemblies, are released (forcefully)
@@ -47,7 +48,7 @@ namespace Rocket.Mash.LoadOut {
 
         public List<string> Aliases {
             get {
-                return new List<String>() { "lo" };
+                return new List<String>() { "lo", };
                 }
             }
 
@@ -66,28 +67,35 @@ namespace Rocket.Mash.LoadOut {
                 return;
 
             if (!Config.AllowFromCommand) {
-                Say(player, Config.CommandDisabledMessage, Config.ErrorColor);
+                Say(player, LoadOut.Instance.Translations["command_disabled"], Config.ErrorColor);
+                Log("Command disabled.");
                 return;
                 }
 
             if (!player.HasPermission("LoadOut") && !player.HasPermission("*")) {
-                Say(player, Config.AccessDeniedMessage, Color.red);
+                Say(player, LoadOut.Instance.Translations["access_denied"], Color.red);
                 Log($"LoadOut> {player.CharacterName} doesn't have permission.");
                 return;
                 }
 
-            if (cmd?.Length == 0) {
+            if (cmd.Length == 0) {
                 Log($"LoadOut> Called by {player.CharacterName}");
                 player.GetComponent<LoadOutComp>().AskLoadOut();
                 } else {
-                if (player.HasPermission("LoadOut.Other")) {
+                Log("cmd.Length > 0");
+                if (player.HasPermission("LoadOut.Other") || player.HasPermission("*")) {
+                    Log("Has permission to give other.");
                     if (RocketPlayer.FromName(cmd[0]) != null) {
+                        Log("RP.FromName != null");
                         RocketPlayer p = RocketPlayer.FromName(cmd[0]);
-                        p.GetComponent<LoadOutComp>().AskLoadOut(p.CharacterName);
+                        if (p != null) {
+                            p.GetComponent<LoadOutComp>().AskLoadOut(p);
+                            }
                         }
+                    } else {
+                    Say(player, LoadOut.Instance.Translations["access_denied_gift"], Config.ErrorColor);
                     }
                 }
             }
-
         }
     }
