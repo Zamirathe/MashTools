@@ -1,10 +1,12 @@
 ﻿using Rocket.Unturned.Player;
 using Rocket.Unturned.Plugins;
-using UnityEngine;
 
 using static Rocket.Unturned.RocketChat;
 using static Rocket.Unturned.Events.RocketPlayerEvents;
 using static Rocket.Unturned.Logging.Logger;
+using System;
+using System.IO;
+using SDG.Unturned;
 using System.Collections.Generic;
 
 /*  All code is copyright © 2015 Auria.pw
@@ -26,12 +28,19 @@ using System.Collections.Generic;
 
 namespace Rocket.Mash.DeathAnnounce {
     public class DeathAnnounce : RocketPlugin<DeathAnnounceConf> {
-        public static System.Version Version = new System.Version(0, 0, 1, 0);
+        public static System.Version Version = new Version(0, 0, 3, 1);
         public static DeathAnnounce Instance;
+
+        private Dictionary<EDeathCause, DAUserMsg> CauseLookup;
 
         protected override void Load() {
             Instance = this;
             hookEvents();
+            CauseLookup = new Dictionary<EDeathCause, DAUserMsg>();
+
+            foreach (DAUserMsg daum in Configuration.UserMessages)
+                CauseLookup.Add((EDeathCause)Enum.Parse(typeof(EDeathCause), daum.Cause), daum);
+
             Log(Instance.Configuration.LoadedText);
             }
 
@@ -49,24 +58,25 @@ namespace Rocket.Mash.DeathAnnounce {
             }
 
         private void DA_OnPlayerDeath(RocketPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer) {
-            DAUserMsg DAMsg = null;
-            string Msg = string.Empty;
-            string Name = RocketPlayer.FromCSteamID(murderer).CharacterName;
+            if (murderer.ToString() == "90071992547409920") { murderer = (Steamworks.CSteamID)0; }
+            if (murderer == null) { murderer = (Steamworks.CSteamID)0; }
             
-            foreach (DAUserMsg daum in Configuration.UserMessages)
-                if (daum.Cause.ToUpper() == cause.ToString().ToUpper())
-                    DAMsg = daum;                    
+            string Name = string.Empty;
+            if (murderer.ToString().Length > 1)
+                Name = RocketPlayer.FromCSteamID(murderer)?.CharacterName;
 
-            if (DAMsg == null) {
-                Log($"DeathAnnounce: UserMessage was empty for cause '{cause.ToString().ToUpper()}'");
-                return;
+            string Message="";
+
+            // if name is nothing AND we have notempty altMsg
+            if (String.IsNullOrEmpty(Name) && !String.IsNullOrEmpty(CauseLookup[cause].AltMessage)) {
+                Message = CauseLookup[cause].AltMessage.Replace(@"%P", player.CharacterName);
+                } else {
+                Message = CauseLookup[cause].Message.Replace(@"%K", Name);
+                Message = Message.Replace(@"%P", player.CharacterName);
                 }
 
-            Msg = DAMsg.CMessage.Replace("{0}", Name);
+            Say(Message, CauseLookup[cause].Color);
 
-            Say($"{player.CharacterName} {Msg}", DAMsg.CColor);
-            Log($"{player.CharacterName} {Msg} ({DAMsg.CColor})");
             }
-
         }
     }
