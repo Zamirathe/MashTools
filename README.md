@@ -8,7 +8,17 @@ if you'd prefer just to assign global permission to access everything.
 # DeathAnnounce
 
 A simple plugin that announces when a player dies and by what means they met their end.
-Death messages are customizable in the .translations file.
+
+##### Permissions
+Permission       | Action
+---------------- | -------
+DeathAnnounce    | Allows caller to enable/disable plugin
+
+##### Commands
+Command     | Action
+------------|---------
+DA          | Shows current plugin status (ie; on/off)
+DA [on/off] | Toggle plugin on/off
 
 # LoadOut
 
