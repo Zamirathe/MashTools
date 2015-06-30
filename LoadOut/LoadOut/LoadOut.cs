@@ -42,6 +42,7 @@ namespace Rocket.Mash.LoadOut {
             IndexesToRemove = new List<int>();
             hookEvents();
             Log(this.Configuration.LoadedText);
+            
             }
 
         protected override void Unload() {

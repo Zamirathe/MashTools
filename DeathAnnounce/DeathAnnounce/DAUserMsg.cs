@@ -24,10 +24,8 @@ namespace Rocket.Mash.DeathAnnounce {
         [XmlAttribute("Cause")]
         public string Cause;
 
-        //[XmlAttribute("Message")]
         public string Message;
 
-        //[XmlAttribute("AltMessage")]
         public string AltMessage;
 
         [XmlAttribute("Color")]
@@ -56,6 +54,7 @@ namespace Rocket.Mash.DeathAnnounce {
 
             for (int i = 0; i < strings.Length; i++) {
                 if (float.Parse(strings[i]) > 1.0f) { strings[i] = 1.0f.ToString(); }
+                if (float.Parse(strings[i]) < 0f) { strings[i] = 0f.ToString(); }
                 }
 
             retVal.r = float.Parse(strings[0]);
