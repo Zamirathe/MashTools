@@ -16,8 +16,8 @@ using static Rocket.Unturned.Logging.Logger;
     peoples from which this software was obtained.
     
     This disclaimer/notice is to be maintained in all source files
-    and the author tags are not to be removed from unmodified versions
-    of this software.
+    and the author tags are not to be removed any versions of this
+    software.
 
     - Mash    
     
@@ -25,7 +25,6 @@ using static Rocket.Unturned.Logging.Logger;
     Unturned - copyright © 2015 Smartly Dressed Games
     Unity    - Copyright © 2015 Unity Technologies
     */
-
 
 namespace Rocket.Mash.RuleBook {
     public class RuleBook : RocketPlugin<RuleBookConf> {

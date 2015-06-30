@@ -24,24 +24,24 @@ using static Rocket.Unturned.Logging.Logger;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-namespace Rocket.Mash.LoadOut {
-    public class LoadOutCommand : IRocketCommand {
+namespace Rocket.Mash.DeathAnnounce {
+    public class DeathAnnounceCommand : IRocketCommand {
 
         public bool RunFromConsole { get { return false; } }
 
-        public string Name { get { return "LoadOut"; } }
+        public string Name { get { return "DA"; } }
 
-        public string Help { get { return "Grants a starting set of equipment."; } }
+        public string Help { get { return "Toggles death annoucements on/off."; } }
 
         public string Syntax {
             get {
-                return "None.";
+                return "/DA [on|off] - If [on|off] not specified, shows current state.";
                 }
             }
 
         public List<string> Aliases {
             get {
-                    return new List<String>() { "lo", "kit" };
+                    return new List<String>() { };
                 }
             }
 
@@ -50,20 +50,21 @@ namespace Rocket.Mash.LoadOut {
             if (player == null)
                 return;
 
-            if (!player.HasPermission("LoadOut") && !player.HasPermission("*")) {
-                Say(player, LoadOut.Instance.Configuration.AccessDeniedMessage, Color.red);
-                Log($"LoadOut> {player.CharacterName} doesn't have permission.");
+            if (!player.HasPermission("DeathAnnounce") && !player.HasPermission("*")) {
+                Say(player, DeathAnnounce.Instance.Configuration.AccessDeniedMessage.Replace("%U", player.CharacterName), Color.red);
+                Log($"DeathAnnounce> {player.CharacterName} doesn't have permission.");
                 return;
                 }
+
+            if (cmd[0] != "on" || cmd[0] != "off")
+                Say(player, $"DeathAnnounce is currently {(DeathAnnounce.Instance.Configuration.Enabled == true ? "on" : "off")}");
+              else if (cmd[0].ToLower() == "on")
+                DeathAnnounce.Instance.Configuration.Enabled = true;
+              else if (cmd[0].ToLower() == "off")
+                DeathAnnounce.Instance.Configuration.Enabled = false;
+                
             
-            if (!LoadOut.Instance.Configuration.AllowFromCommand) {
-                Say(player, LoadOut.Instance.Configuration.CommandDisabledMessage, Color.yellow);
-                return;
-                }
-
-            Log($"LoadOut> Called by {player.CharacterName}");
-
-            LoadOut.Instance.GrantLoadOut(player, true);
+            Log($"DeathAnnounce[{cmd[0]}]> Called by {player.CharacterName}");
 
             }
 

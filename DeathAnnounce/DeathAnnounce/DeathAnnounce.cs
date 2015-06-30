@@ -16,8 +16,8 @@ using System.Collections.Generic;
     peoples from which this software was obtained.
     
     This disclaimer/notice is to be maintained in all source files
-    and the author tags are not to be removed from unmodified versions
-    of this software.
+    and the author tags are not to be removed any versions of this
+    software.
 
     - Mash    
     
@@ -58,6 +58,10 @@ namespace Rocket.Mash.DeathAnnounce {
             }
 
         private void DA_OnPlayerDeath(RocketPlayer player, SDG.Unturned.EDeathCause cause, SDG.Unturned.ELimb limb, Steamworks.CSteamID murderer) {
+
+            if (!this.Loaded || !this.Configuration.Enabled)
+                return;
+
             if (murderer.ToString() == "90071992547409920") { murderer = (Steamworks.CSteamID)0; }
             if (murderer == null) { murderer = (Steamworks.CSteamID)0; }
             

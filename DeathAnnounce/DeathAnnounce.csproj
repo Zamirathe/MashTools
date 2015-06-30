@@ -61,6 +61,7 @@
     <Compile Include="DeathAnnounce\DAUserMsg.cs" />
     <Compile Include="DeathAnnounce\DeathAnnounce.cs" />
     <Compile Include="DeathAnnounce\DeathAnnounceConf.cs" />
+    <Compile Include="DeathAnnounce\DeathAnnounceCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

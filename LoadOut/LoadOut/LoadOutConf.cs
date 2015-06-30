@@ -10,8 +10,8 @@ using System.Xml.Serialization;
     peoples from which this software was obtained.
     
     This disclaimer/notice is to be maintained in all source files
-    and the author tags are not to be removed from unmodified versions
-    of this software.
+    and the author tags are not to be removed any versions of this
+    software.
 
     - Mash    
     
@@ -19,7 +19,6 @@ using System.Xml.Serialization;
     Unturned - copyright © 2015 Smartly Dressed Games
     Unity    - Copyright © 2015 Unity Technologies
     */
-
 
 namespace Rocket.Mash.LoadOut {
     [Serializable]

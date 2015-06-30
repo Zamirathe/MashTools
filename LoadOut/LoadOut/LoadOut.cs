@@ -15,8 +15,8 @@ using static Rocket.Unturned.RocketChat;
     peoples from which this software was obtained.
     
     This disclaimer/notice is to be maintained in all source files
-    and the author tags are not to be removed from unmodified versions
-    of this software.
+    and the author tags are not to be removed any versions of this
+    software.
 
     - Mash    
     

@@ -11,8 +11,8 @@ using UnityEngine;
     peoples from which this software was obtained.
     
     This disclaimer/notice is to be maintained in all source files
-    and the author tags are not to be removed from unmodified versions
-    of this software.
+    and the author tags are not to be removed any versions of this
+    software.
 
     - Mash    
     
@@ -26,6 +26,7 @@ namespace Rocket.Mash.DeathAnnounce {
         public bool Enabled;
         public List<DAUserMsg> UserMessages;
         public string LoadedText { get { return $"{DeathAnnounce.Version} by Mash"; } }
+        public string AccessDeniedMessage { get { return $"Access denied for user %U"; } }
 
         public IRocketPluginConfiguration DefaultConfiguration {
             get {
