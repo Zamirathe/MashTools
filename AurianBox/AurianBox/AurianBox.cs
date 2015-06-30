@@ -1,4 +1,6 @@
-﻿/*  All code is copyright © 2015 Auria.pw
+﻿using Rocket.Unturned.Plugins;
+
+/*  All code is copyright © 2015 Auria.pw
     Code, and their compiled assemblies, are released (forcefully)
     under the GNU GPL. By using any of this code and/or software
     you agree to hold indemnify the author and any associated
@@ -15,9 +17,8 @@
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-namespace AurianBox
+namespace Rocket.Mash.AurianBox
 {
-    public class Class1
-    {
+    public class AurianBox : RocketPlugin<AurianBoxConf> {
     }
 }
