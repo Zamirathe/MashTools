@@ -31,7 +31,7 @@ AltMessage|String|Message displayed if message SHOULD have a "murderer" but does
 Variable|Value
 --------|-----
 %P      |The player that died
-%K      |The 'killer' if applicable.
+%K      |The 'killer' if applicable
 
 # LoadOut
 
