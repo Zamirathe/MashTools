@@ -8,7 +8,30 @@ if you'd prefer just to assign global permission to access everything.
 # DeathAnnounce
 
 A simple plugin that announces when a player dies and by what means they met their end.
-Death messages are customizable in the .translations file.
+
+##### Permissions
+Permission       | Action
+---------------- | -------
+DeathAnnounce    | Allows caller to enable/disable plugin
+
+##### Commands
+Command     | Action
+------------|---------
+DA          | Shows current plugin status (ie; on/off)
+DA [on/off] | Toggle plugin on/off
+
+##### Configuration
+Field | Type | About
+------|------|------
+CAUSE |STATIC|Type of death - DO NOT CHANGE
+Color |Float Array|Color in RGB, each value is a float from 0 to 1.0
+Message|String|Message displayed for this type of death
+AltMessage|String|Message displayed if message SHOULD have a "murderer" but doesn't.<br/>ie;PlayerX stepped on 's grenade. Since %K doesn't contain a name, this AltMessage will be used.<br/>Leave blank to disable
+
+Variable|Value
+--------|-----
+%P      |The player that died
+%K      |The 'killer' if applicable
 
 # LoadOut
 
