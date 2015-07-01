@@ -36,7 +36,7 @@ namespace Rocket.Mash.GearUp {
         #region CmdConf
         public bool RunFromConsole { get { return false; } }
 
-        public string Name { get { return "lo"; } }
+        public string Name { get { return "gearup"; } }
 
         public string Help { get { return "Grants a starting set of equipment."; } }
 
@@ -48,7 +48,7 @@ namespace Rocket.Mash.GearUp {
 
         public List<string> Aliases {
             get {
-                return new List<String>() { };
+                return new List<String>() { "gear", "gu" };
                 }
             }
 
@@ -74,12 +74,12 @@ namespace Rocket.Mash.GearUp {
 
             if (!player.HasPermission("GearUp") && !player.HasPermission("*")) {
                 Say(player, GearUp.Instance.Translations["access_denied"], Color.red);
-                Log($"LoadOut> {player.CharacterName} doesn't have permission.");
+                Log($"GearUp> {player.CharacterName} doesn't have permission.");
                 return;
                 }
 
-            if (cmd.Length <= 1) {
-                Log($"LoadOut> Called by {player.CharacterName}");
+            if (cmd.Length == 0) {
+                Log($"GearUp> Called by {player.CharacterName}");
                 player.GetComponent<GearUpComp>().AskLoadOut();
                 } else {
                 Log("cmd.Length > 0");

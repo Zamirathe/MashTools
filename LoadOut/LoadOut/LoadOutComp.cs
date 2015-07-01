@@ -55,7 +55,7 @@ namespace Rocket.Mash.GearUp {
                 } else {
                 Log("Avail<Now | from != null");
                 Available = DateTime.Now.AddSeconds(Config.CommandCooldown);
-                GiveLoadOut(from);
+                GiveGearUp(from);
                 }
             }
 
@@ -63,10 +63,10 @@ namespace Rocket.Mash.GearUp {
             Timer.Stop();
             Log("Timer popped.");
             if (Active)
-                GiveLoadOut();
+                GiveGearUp();
             }
 
-        private void GiveLoadOut(RocketPlayer from = null) {
+        private void GiveGearUp(RocketPlayer from = null) {
             foreach (GearUpEquip loe in GearUp.Instance.Configuration.LoadOutEquipment) {
                 if (Player.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
                     LogError($"LoadOut> Failed to give {Player.CharacterName} item {loe.EntityId} x{loe.EntityAmount}.");

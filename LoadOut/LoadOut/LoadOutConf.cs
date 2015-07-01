@@ -31,11 +31,10 @@ namespace Rocket.Mash.GearUp {
         public int CommandCooldown;
         [XmlElement("ErrorColor")]
         public string EColor;
-        [XmlElement("LoadOutGivenColor")]
+        [XmlElement("GearGivenColor")]
         public string SColor;
 
         public List<GearUpEquip> LoadOutEquipment;
-
 
         [XmlIgnore]
         public int FlushInterval = 5;

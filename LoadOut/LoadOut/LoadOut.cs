@@ -75,9 +75,9 @@ namespace Rocket.Mash.GearUp {
         public override Dictionary<string, string> DefaultTranslations {
             get {
                 return new Dictionary<string, string>() {
-                        { "loadout_given", "You've got stuff!" },
-                        { "loadout_gift", "It seems %P gave you some stuff." },
-                        { "loadout_gift_success", "GearUp given to %P." },
+                        { "gear_given", "You've got stuff!" },
+                        { "gear_gift", "It seems %P gave you some stuff." },
+                        { "gear_gift_success", "GearUp given to %P." },
                         { "error_message", "An error occurred." },
                         { "access_denied", "GearUp.Self no permission." },
                         { "access_denied_gift", "GearUp.Gift no permission." },
