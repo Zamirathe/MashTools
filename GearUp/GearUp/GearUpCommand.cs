@@ -80,21 +80,21 @@ namespace Rocket.Mash.GearUp {
             if (player == null)
                 return;
 
-            if (cmd == null)
-                cmd = new string[]{ };
-
-            PERM perms = PERM.None;
-            if (player.HasPermission("GearUp.Info"))
+            PERM perms;// = PERM.None;
+            if (player.HasPermission(@"gearup.info"))
                 perms = PERM.Info;
 
-            if (player.HasPermission("GearUp.Self"))
+            else if (player.HasPermission(@"gearup.self"))
                 perms = PERM.Self;
 
-            if (player.HasPermission("GearUp.Other"))
+            else if (player.HasPermission(@"gearup.other"))
                 perms = PERM.Other;
 
-            if (player.HasPermission("*") || player.HasPermission("GearUp.Admin") || player.HasPermission("GearUp.*"))
+            else if (player.HasPermission(@"*") || player.HasPermission(@"gearup.admin") || player.HasPermission(@"gearup.*"))
                 perms = PERM.Admin;
+
+            else
+                perms = PERM.None;
 
             if (!Config.AllowCmd) {
                 Say(player, GearUp.Instance.Translations["command_disabled"], Config.ErrorColor);
@@ -102,9 +102,9 @@ namespace Rocket.Mash.GearUp {
                 return;
                 }
 
-            if (perms == PERM.None && cmd[0] != "-info") {
+            if (perms <= PERM.None && string.Join("", cmd) != "-info") {                
                 Say(player, GearUp.Instance.Translations["access_denied"], Color.red);
-                Log($"GU: {player.CharacterName} doesn't have permission.");
+                Log($"GU: {player.CharacterName} doesn't have PERM => {perms.ToString()}");
                 return;
                 }
 
