@@ -29,7 +29,7 @@ using SDG.Unturned;
 
 namespace Rocket.Mash.GearUp {
     public class GearUp : RocketPlugin<GearUpConf> {
-        public static Version Version = new Version(0, 0, 4, 6);
+        public static Version Version = new Version(0, 0, 4, 8);
         public static GearUp Instance;
 
         public static GearUpCommand GearUpCmd;
@@ -46,7 +46,6 @@ namespace Rocket.Mash.GearUp {
             }
         
         public void FixedUpdate() {
-            // don't need this anymore :o
             }
 
         private void HookEvents() {
@@ -75,15 +74,16 @@ namespace Rocket.Mash.GearUp {
         public override Dictionary<string, string> DefaultTranslations {
             get {
                 return new Dictionary<string, string>() {
-                        { "gear_given", "You've got stuff!" },
-                        { "gear_gift", "It seems %P gave you some stuff." },
-                        { "gear_gift_success", "GearUp given to %P." },
-                        { "error_message", "An error occurred." },
-                        { "access_denied", "GearUp.Self no permission." },
-                        { "access_denied_gift", "GearUp.Gift no permission." },
-                        { "command_disabled", "LoadOuts are spawn only!" },
-                        { "command_announce", "Type /loadout to get some stuff!" },
-                        { "not_ready", "GearUp will be available in %S seconds." },
+                        { "gear_given", "GU: You've got stuff!" },
+                        { "gear_gift", "GU: It seems %P gave you some stuff." },
+                        { "gear_gift_success", "GU: Gear sent to %P." },
+                        { "error_message", "GU: An error occurred." },
+                        { "access_denied", "GU: No permission." },
+                        { "access_denied_gift", "GU: No 'other' permission." },
+                        { "command_disabled", "GU: GearUps are spawn only!" },
+                        { "command_announce", "GU: Type /gear to get some stuff!" },
+                        { "not_ready", "GU: Available in %S seconds." },
+                        { "not_new_player", "GU: Not eligible of gear." },
                     };
                 }
             }

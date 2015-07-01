@@ -33,6 +33,8 @@ namespace Rocket.Mash.GearUp {
         public string EColor;
         [XmlElement("GearGivenColor")]
         public string SColor;
+        [XmlElement("InfoColor")]
+        public string IColor;
 
         public List<Gear> GearList;
 
@@ -40,6 +42,14 @@ namespace Rocket.Mash.GearUp {
         public int FlushInterval = 5;
         [XmlIgnore]
         public string LoadedText { get { return $"{GearUp.Version} by Mash"; } }
+
+        [XmlIgnore]
+        public List<string> HelpText = new List<string>() {
+            "/gu Give yourself the gear!",
+            "/gu [player] Give another player gear.",
+            "/gu -[on|off|-|info] enable/disable/status/info of GearUp",
+            "/gu -reset [player] reset your cooldown or [player]s",
+            };
 
         public UnityEngine.Color ErrorColor {
             get {
@@ -55,6 +65,13 @@ namespace Rocket.Mash.GearUp {
                 return StringToUEColor(SColor);
                 }
             }
+        public UnityEngine.Color InfoColor {
+            get {
+                if (IColor.Split(':').Length != 3)
+                    return UnityEngine.Color.gray;
+                return StringToUEColor(IColor);
+                }
+            }
 
         public IRocketPluginConfiguration DefaultConfiguration {
             get {
@@ -65,6 +82,7 @@ namespace Rocket.Mash.GearUp {
                     SpawnDelay = 2,
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
+                    IColor = "0.2:0.2:0.2",
                     GearList = new List<Gear>() {
                         new Gear(97, 1),
                         new Gear(15, 1),

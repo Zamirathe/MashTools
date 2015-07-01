@@ -39,11 +39,17 @@ namespace Rocket.Mash.GearUp {
             Available = DateTime.Now;
             Timer = new System.Timers.Timer(GearUp.Instance.Configuration.SpawnDelay * 1000);
             Timer.Elapsed += Timer_Elapsed;
-            Timer.Start();
-            }
 
-        private void OnPlayerConnected(RocketPlayer player) {
-            throw new NotImplementedException();
+            int items = 0;
+            foreach (SDG.Unturned.Items i in Player.Inventory.Items) {
+                items += i.getItemCount();
+                }
+
+            if (items == 0)
+                Timer.Start();
+            else
+                Say(Player, GearUp.Instance.Translations["not_new_player"], Config.InfoColor);
+
             }
 
         public void AskGearUp(RocketPlayer from = null) {
@@ -56,6 +62,14 @@ namespace Rocket.Mash.GearUp {
                 Available = DateTime.Now.AddSeconds(Config.CommandCooldown);
                 GiveGear(from);
                 }
+            }
+
+        public void ResetCooldown(RocketPlayer player = null) {
+            Available = DateTime.Now;
+            if (player != null)
+                Say(Player, $"GearUp cooldown was reset by {player.CharacterName}.", Config.SuccessColor);
+            else
+                Say(Player, "GearUp cooldown reset.", Config.SuccessColor);
             }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
