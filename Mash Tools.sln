@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearUp", "LoadOut\GearUp.csproj", "{04584CE2-5755-4BFE-B0F2-904675A9F6A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearUp", "GearUp\GearUp.csproj", "{04584CE2-5755-4BFE-B0F2-904675A9F6A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeathAnnounce", "DeathAnnounce\DeathAnnounce.csproj", "{582E5BEF-32B8-460A-A899-A92DF2B3E746}"
 EndProject
