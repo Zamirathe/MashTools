@@ -27,12 +27,12 @@ using SDG.Unturned;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-namespace Rocket.Mash.LoadOut {
-    public class LoadOut : RocketPlugin<LoadOutConf> {
+namespace Rocket.Mash.GearUp {
+    public class GearUp : RocketPlugin<GearUpConf> {
         public static Version Version = new Version(0, 0, 4, 6);
-        public static LoadOut Instance;
+        public static GearUp Instance;
 
-        public static LoadOutCommand LoadOutCmd;
+        public static GearUpCommand GearUpCmd;
 
         protected override void Load() {
             Instance = this;
@@ -64,11 +64,11 @@ namespace Rocket.Mash.LoadOut {
             }
 
         private void EventPlayerSpawn(RocketPlayer player, Vector3 position, byte angle) {
-            player.GetComponent<LoadOutComp>().Timer.Start();
+            player.GetComponent<GearUpComp>().Timer.Start();
             }
 
         private void CriticalError() {
-            Say("LoadOut has stopped due to an error.", Color.red);
+            Say("GearUp has stopped due to an error.", Color.red);
             this.Configuration.Enabled = false;
             }
 
@@ -77,13 +77,13 @@ namespace Rocket.Mash.LoadOut {
                 return new Dictionary<string, string>() {
                         { "loadout_given", "You've got stuff!" },
                         { "loadout_gift", "It seems %P gave you some stuff." },
-                        { "loadout_gift_success", "LoadOut given to %P." },
+                        { "loadout_gift_success", "GearUp given to %P." },
                         { "error_message", "An error occurred." },
-                        { "access_denied", "LoadOut.Self no permission." },
-                        { "access_denied_gift", "LoadOut.Gift no permission." },
+                        { "access_denied", "GearUp.Self no permission." },
+                        { "access_denied_gift", "GearUp.Gift no permission." },
                         { "command_disabled", "LoadOuts are spawn only!" },
                         { "command_announce", "Type /loadout to get some stuff!" },
-                        { "not_ready", "LoadOut will be available in %S seconds." },
+                        { "not_ready", "GearUp will be available in %S seconds." },
                     };
                 }
             }

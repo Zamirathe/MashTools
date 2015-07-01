@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LoadOut")]
+[assembly: AssemblyTitle("GearUp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LoadOut")]
+[assembly: AssemblyProduct("GearUp")]
 [assembly: AssemblyCopyright("Copyright ©  2015 Auria.pw")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

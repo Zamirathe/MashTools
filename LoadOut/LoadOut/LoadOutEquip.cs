@@ -18,17 +18,17 @@ using System;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-namespace Rocket.Mash.LoadOut {
+namespace Rocket.Mash.GearUp {
     [Serializable]
-    public class LoadOutEquip {
+    public class GearUpEquip {
         [XmlAttribute("Id")]
         public ushort EntityId;
         [XmlAttribute("Amount")]
         public byte EntityAmount;
 
-        public LoadOutEquip() { }
+        public GearUpEquip() { }
 
-        public LoadOutEquip(ushort id, byte amount) {
+        public GearUpEquip(ushort id, byte amount) {
             this.EntityId = id;
             this.EntityAmount = amount;
             }

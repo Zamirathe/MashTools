@@ -27,16 +27,16 @@ using Rocket.Unturned.Plugins;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-namespace Rocket.Mash.LoadOut {
-    public class LoadOutCommand : IRocketCommand {
+namespace Rocket.Mash.GearUp {
+    public class GearUpCommand : IRocketCommand {
 
         private bool Initialized = false;
-        private LoadOutConf Config;
+        private GearUpConf Config;
 
         #region CmdConf
         public bool RunFromConsole { get { return false; } }
 
-        public string Name { get { return "LoadOut"; } }
+        public string Name { get { return "lo"; } }
 
         public string Help { get { return "Grants a starting set of equipment."; } }
 
@@ -48,7 +48,7 @@ namespace Rocket.Mash.LoadOut {
 
         public List<string> Aliases {
             get {
-                return new List<String>() { "lo", };
+                return new List<String>() { };
                 }
             }
 
@@ -56,7 +56,7 @@ namespace Rocket.Mash.LoadOut {
 
         private void Initialize() {
             Initialized = true;
-            Config = LoadOut.Instance.Configuration;
+            Config = GearUp.Instance.Configuration;
             }
 
         public void Execute(RocketPlayer player, string[] cmd) {
@@ -67,33 +67,33 @@ namespace Rocket.Mash.LoadOut {
                 return;
 
             if (!Config.AllowFromCommand) {
-                Say(player, LoadOut.Instance.Translations["command_disabled"], Config.ErrorColor);
+                Say(player, GearUp.Instance.Translations["command_disabled"], Config.ErrorColor);
                 Log("Command disabled.");
                 return;
                 }
 
-            if (!player.HasPermission("LoadOut") && !player.HasPermission("*")) {
-                Say(player, LoadOut.Instance.Translations["access_denied"], Color.red);
+            if (!player.HasPermission("GearUp") && !player.HasPermission("*")) {
+                Say(player, GearUp.Instance.Translations["access_denied"], Color.red);
                 Log($"LoadOut> {player.CharacterName} doesn't have permission.");
                 return;
                 }
 
             if (cmd.Length <= 1) {
                 Log($"LoadOut> Called by {player.CharacterName}");
-                player.GetComponent<LoadOutComp>().AskLoadOut();
+                player.GetComponent<GearUpComp>().AskLoadOut();
                 } else {
                 Log("cmd.Length > 0");
-                if (player.HasPermission("LoadOut.Other") || player.HasPermission("*")) {
+                if (player.HasPermission("GearUp.Other") || player.HasPermission("*")) {
                     Log("Has permission to give other.");
                     if (RocketPlayer.FromName(cmd[1]) != null) {
                         Log("RP.FromName != null");
                         RocketPlayer p = RocketPlayer.FromName(cmd[1]);
                         if (p != null) {
-                            p.GetComponent<LoadOutComp>().AskLoadOut(p);
+                            p.GetComponent<GearUpComp>().AskLoadOut(p);
                             }
                         }
                     } else {
-                    Say(player, LoadOut.Instance.Translations["access_denied_gift"], Config.ErrorColor);
+                    Say(player, GearUp.Instance.Translations["access_denied_gift"], Config.ErrorColor);
                     }
                 }
             }

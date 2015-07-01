@@ -21,24 +21,24 @@ using static Rocket.Unturned.RocketChat;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-namespace Rocket.Mash.LoadOut {
+namespace Rocket.Mash.GearUp {
 
-    public class LoadOutComp : RocketPlayerComponent {
+    public class GearUpComp : RocketPlayerComponent {
         public DateTime Available;
         public System.Timers.Timer Timer;
 
         private Dictionary<string, string> Translations;
-        private LoadOutConf Config;
+        private GearUpConf Config;
 
         private bool Active {
-            get { return (LoadOut.Instance.Loaded && Config.Enabled && Player.HasPermission("LoadOut.Receive")); }
+            get { return (GearUp.Instance.Loaded && Config.Enabled && Player.HasPermission("GearUp.Receive")); }
             }
 
         public void Start() {
-            Config = LoadOut.Instance.Configuration;
-            Translations = LoadOut.Instance.Translations;
+            Config = GearUp.Instance.Configuration;
+            Translations = GearUp.Instance.Translations;
             Available = DateTime.Now;
-            Timer = new System.Timers.Timer(LoadOut.Instance.Configuration.SpawnDelay * 1000);
+            Timer = new System.Timers.Timer(GearUp.Instance.Configuration.SpawnDelay * 1000);
             Timer.Elapsed += Timer_Elapsed;
             Timer.Start();
             }
@@ -67,7 +67,7 @@ namespace Rocket.Mash.LoadOut {
             }
 
         private void GiveLoadOut(RocketPlayer from = null) {
-            foreach (LoadOutEquip loe in LoadOut.Instance.Configuration.LoadOutEquipment) {
+            foreach (GearUpEquip loe in GearUp.Instance.Configuration.LoadOutEquipment) {
                 if (Player.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
                     LogError($"LoadOut> Failed to give {Player.CharacterName} item {loe.EntityId} x{loe.EntityAmount}.");
                     Say(from, Translations["error_message"], Config.ErrorColor);

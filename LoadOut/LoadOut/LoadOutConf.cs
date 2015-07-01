@@ -21,9 +21,9 @@ using System.Xml.Serialization;
     Unity    - Copyright © 2015 Unity Technologies
     */
 
-namespace Rocket.Mash.LoadOut {
+namespace Rocket.Mash.GearUp {
     [Serializable]
-    public class LoadOutConf : IRocketPluginConfiguration {
+    public class GearUpConf : IRocketPluginConfiguration {
         public bool Enabled;
         public ushort SpawnDelay;
         public bool AllowFromCommand;
@@ -34,13 +34,13 @@ namespace Rocket.Mash.LoadOut {
         [XmlElement("LoadOutGivenColor")]
         public string SColor;
 
-        public List<LoadOutEquip> LoadOutEquipment;
+        public List<GearUpEquip> LoadOutEquipment;
 
 
         [XmlIgnore]
         public int FlushInterval = 5;
         [XmlIgnore]
-        public string LoadedText { get { return $"{LoadOut.Version} by Mash"; } }
+        public string LoadedText { get { return $"{GearUp.Version} by Mash"; } }
 
         public UnityEngine.Color ErrorColor {
             get {
@@ -59,18 +59,18 @@ namespace Rocket.Mash.LoadOut {
 
         public IRocketPluginConfiguration DefaultConfiguration {
             get {
-                return new LoadOutConf() {
+                return new GearUpConf() {
                     Enabled = true,
                     AllowFromCommand = true,
                     CommandCooldown = 900,
                     SpawnDelay = 2,
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
-                    LoadOutEquipment = new List<LoadOutEquip>() {
-                        new LoadOutEquip(97, 1),
-                        new LoadOutEquip(15, 1),
-                        new LoadOutEquip(81, 1),
-                        new LoadOutEquip(98, 2)
+                    LoadOutEquipment = new List<GearUpEquip>() {
+                        new GearUpEquip(97, 1),
+                        new GearUpEquip(15, 1),
+                        new GearUpEquip(81, 1),
+                        new GearUpEquip(98, 2)
                         },
                     };
                 }
