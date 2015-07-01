@@ -33,23 +33,47 @@ Variable|Value
 %P      |The player that died
 %K      |The 'killer' if applicable
 
-# LoadOut
+# GearUp
+#### Formerly LoadOut
 
-Grants players a beginning set of gear when they join your server and when they are killed.
+Grants players a beginning set of gear when they join your server and when they respawn.
 (Items are not given if the player is holding any item(s))
-Items given are configurable in the .config.xml file.
+Items and message colors are configurable in the .config.xml file, messages in translations.
 
+Permissions are in order of inheritance. Each permission inherits any above it
 ##### Permissions
-Permission | Action
----------- | -------
-loadout    | Allows caller to use the loadout command to grant themselves the equipment configured
+Permission   | Action
+------------ | -------
+gearup.info  | Allows caller to view information on GearUp
+gearup.self  | Allows caller to issue themselves the configured items
+gearup.other | Allows caller to issue themselves and others items
+gearup.admin | Allows caller to enable/disable the plugin, reset cooldowns and issue items to anyone
 
+
+All "/gearup" commands are aliased as "/gu" and "/gear"
 ##### Commands
-Command | Action
---------|---------
-loadout | Grants you the starting loadout set of equipment
-lo      | Alias
-kit     | Alias
+Command             | Action
+--------------------|---------
+gear -?             | View command help
+gear -info          | View plugin info (author, version, status)
+gear                | Give yourself items
+gear [player]       | Give [player] items
+gear -[on/off/-]    | Enable/Disable the plugin (-- to view status)
+gear -reset         | Resets your cooldown timer
+gear -reset [player]| Resets [player]s cooldown timer
+
+
+##### Config
+Option      | Effect
+------------|-------
+Enabled     | Whether the plugin should be enabled on startup
+AllowCmd    | Disables ALL commands (effectively making plugin function on-join/spawn only)
+Cooldown    | Command cooldown (how much time to wait before player can use GearUp again)
+SpawnDelay  | How long to wait after player joins to give items
+ErrorColor  | Text color used for error messages<br />Colors are 3 FLOATs.. 0.0 - 1.0, colon separated. (1:1:1 or 0.5:0.5:0.5)
+SuccessColor| Text color used for successfull commands
+InfoColor   | Text color used for informational messages
+GearList    | The equipment/items that will be issued by this plugin
 
 # RuleBook
 
