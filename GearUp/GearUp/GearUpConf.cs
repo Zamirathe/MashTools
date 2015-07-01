@@ -26,9 +26,9 @@ namespace Rocket.Mash.GearUp {
     public class GearUpConf : IRocketPluginConfiguration {
         public bool Enabled;
         public ushort SpawnDelay;
-        public bool AllowFromCommand;
+        public bool AllowCmd;
         public string LoadOutCommand;
-        public int CommandCooldown;
+        public int Cooldown;
         [XmlElement("ErrorColor")]
         public string EColor;
         [XmlElement("GearGivenColor")]
@@ -77,8 +77,8 @@ namespace Rocket.Mash.GearUp {
             get {
                 return new GearUpConf() {
                     Enabled = true,
-                    AllowFromCommand = true,
-                    CommandCooldown = 900,
+                    AllowCmd = true,
+                    Cooldown = 900,
                     SpawnDelay = 2,
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
@@ -98,7 +98,7 @@ namespace Rocket.Mash.GearUp {
 
             string[] strings = input.Split(':');
             if (strings.Length != 3)
-                throw new MissingFieldException("Rocket.Mash.DeathAnnounce::StringToUEColor", "Color param doesn't have 3 :-separated fields.");
+                throw new MissingFieldException("Rocket.Mash.GearUp::StringToUEColor", "Color param doesn't have 3 :-separated fields.");
 
             for (int i = 0; i < strings.Length; i++) {
                 if (float.Parse(strings[i]) > 1.0f) { strings[i] = 1.0f.ToString(); }

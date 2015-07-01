@@ -7,8 +7,6 @@ using Rocket.Unturned.Player;
 
 using static Rocket.Unturned.Logging.Logger;
 using static Rocket.Unturned.RocketChat;
-using Rocket.Unturned;
-using SDG.Unturned;
 
 /*  All code is copyright © 2015 Auria.pw
     Code, and their compiled assemblies, are released (forcefully)
@@ -29,7 +27,7 @@ using SDG.Unturned;
 
 namespace Rocket.Mash.GearUp {
     public class GearUp : RocketPlugin<GearUpConf> {
-        public static Version Version = new Version(0, 0, 4, 8);
+        public static Version Version = new Version(0, 0, 4, 9);
         public static GearUp Instance;
 
         public static GearUpCommand GearUpCmd;

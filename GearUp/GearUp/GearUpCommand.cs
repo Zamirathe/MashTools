@@ -80,6 +80,9 @@ namespace Rocket.Mash.GearUp {
             if (player == null)
                 return;
 
+            if (cmd == null)
+                cmd = new string[]{ };
+
             PERM perms = PERM.None;
             if (player.HasPermission("GearUp.Info"))
                 perms = PERM.Info;
@@ -93,60 +96,49 @@ namespace Rocket.Mash.GearUp {
             if (player.HasPermission("*") || player.HasPermission("GearUp.Admin") || player.HasPermission("GearUp.*"))
                 perms = PERM.Admin;
 
-            if (!Config.AllowFromCommand) {
+            if (!Config.AllowCmd) {
                 Say(player, GearUp.Instance.Translations["command_disabled"], Config.ErrorColor);
-                Log("Command disabled.");
+                Log("GU: Commands are disabled.");
                 return;
                 }
 
             if (perms == PERM.None && cmd[0] != "-info") {
                 Say(player, GearUp.Instance.Translations["access_denied"], Color.red);
-                Log($"GearUp> {player.CharacterName} doesn't have permission.");
+                Log($"GU: {player.CharacterName} doesn't have permission.");
                 return;
                 }
 
-            if (cmd.Length == 0) {
+            if (cmd?.Length == 0) {
                 if (perms < PERM.Self)
                     return;
-
-                Log($"GearUp> Called by {player.CharacterName}");
+                Log($"GU> Called by {player.CharacterName}");
                 player.GetComponent<GearUpComp>().AskGearUp();
-
                 } else if (!cmd[0].StartsWith("-")) {
-
-                Log("cmd.Length > 0");
-
-                if (perms >= PERM.Other) {
-                    Log("Has permission to give other.");
-                    if (RocketPlayer.FromName(cmd[1]) != null) {
-                        Log("RP.FromName != null");
-                        RocketPlayer p = RocketPlayer.FromName(cmd[1]);
-                        if (p != null) {
-                            p.GetComponent<GearUpComp>().AskGearUp(player);
+                if (perms >= PERM.Other && cmd.Length >= 1) {
+                        if (RocketPlayer.FromName(cmd[1]) != null) {
+                            RocketPlayer p = RocketPlayer.FromName(cmd[1]);
+                            if (p != null) {
+                                p.GetComponent<GearUpComp>().AskGearUp(player);
+                                }
                             }
+                        } else {
+                        Say(player, GearUp.Instance.Translations["access_denied_gift"], Config.ErrorColor);
+                        return;
                         }
-
-                    } else {
-
-                    Say(player, GearUp.Instance.Translations["access_denied_gift"], Config.ErrorColor);
-                    return;
-
-                    }
-
                 } else if (cmd[0].StartsWith("-")) {
                 switch (cmd[0]) {
                     case "-on":
                         if (perms < PERM.Admin)
                             return;
                         GearUp.Instance.enabled = true;
-                        Say(player, "GearUp enabled.", Config.SuccessColor);
+                        Say(player, "GU: Enabled", Config.SuccessColor);
                         break;
 
                     case "-off":
                         if (perms < PERM.Admin)
                             return;
                         GearUp.Instance.enabled = false;
-                        Say(player, "GearUp disabled.", Config.SuccessColor);
+                        Say(player, "GU: Disabled", Config.SuccessColor);
                         break;
 
                     case "-?":
@@ -158,7 +150,7 @@ namespace Rocket.Mash.GearUp {
                     case "--":
                         if (perms < PERM.Info)
                             return;
-                        Say(player, $"GearUp plugin {(GearUp.Instance.enabled == true ? "enabled" : "disabled")}.", Color.gray);
+                        Say(player, $"GU: Plugin {(GearUp.Instance.enabled == true ? "enabled" : "disabled")}.", Color.gray);
                         break;
 
                     case "-reset":
@@ -179,11 +171,11 @@ namespace Rocket.Mash.GearUp {
                         break;
 
                     case "-info":
-                        Say(player, $"GearUp {GearUp.Version} by Mash - Auria.pw", Config.InfoColor);
+                        Say(player, $"GearUp {GearUp.Version} by Mash - Auria.pw [{(GearUp.Instance.enabled == true ? "enabled" : "disabled")}]", Config.InfoColor);
                         break;
 
                     default:
-                        Say(player, "Unknown operand", Config.ErrorColor);
+                        Say(player, "GU: Unknown operand", Config.ErrorColor);
                         break;
 
                     }

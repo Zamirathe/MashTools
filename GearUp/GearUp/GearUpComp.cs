@@ -30,7 +30,7 @@ namespace Rocket.Mash.GearUp {
         private GearUpConf Config;
 
         private bool Active {
-            get { return (GearUp.Instance.Loaded && Config.Enabled && Player.HasPermission("GearUp.Receive")); }
+            get { return (GearUp.Instance.Loaded && Config.Enabled && Player.HasPermission("GearUp.Self")); }
             }
 
         public void Start() {
@@ -53,13 +53,11 @@ namespace Rocket.Mash.GearUp {
             }
 
         public void AskGearUp(RocketPlayer from = null) {
-            Say(Player, "we were asked gearup.");
             if ((Available > DateTime.Now) && from == null) {
                 string notReadyMsg = Translations["not_ready"].Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
                 Say(Player, notReadyMsg, Config.ErrorColor);
                 } else {
-                Log("Avail<Now | from != null");
-                Available = DateTime.Now.AddSeconds(Config.CommandCooldown);
+                Available = DateTime.Now.AddSeconds(Config.Cooldown);
                 GiveGear(from);
                 }
             }
@@ -67,14 +65,13 @@ namespace Rocket.Mash.GearUp {
         public void ResetCooldown(RocketPlayer player = null) {
             Available = DateTime.Now;
             if (player != null)
-                Say(Player, $"GearUp cooldown was reset by {player.CharacterName}.", Config.SuccessColor);
+                Say(Player, $"GU: Cooldown was reset by {player.CharacterName}.", Config.SuccessColor);
             else
-                Say(Player, "GearUp cooldown reset.", Config.SuccessColor);
+                Say(Player, "GU: Cooldown reset.", Config.SuccessColor);
             }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
             Timer.Stop();
-            Log("Timer popped.");
             if (Active)
                 GiveGear();
             }
