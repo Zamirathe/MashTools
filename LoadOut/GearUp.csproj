@@ -7,8 +7,8 @@
     <ProjectGuid>{04584CE2-5755-4BFE-B0F2-904675A9F6A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rocket.Mash.LoadOut</RootNamespace>
-    <AssemblyName>LoadOut</AssemblyName>
+    <RootNamespace>Rocket.Mash.GearUp</RootNamespace>
+    <AssemblyName>GearUp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
