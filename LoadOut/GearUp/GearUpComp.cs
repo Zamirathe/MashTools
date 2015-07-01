@@ -22,7 +22,6 @@ using static Rocket.Unturned.RocketChat;
     */
 
 namespace Rocket.Mash.GearUp {
-
     public class GearUpComp : RocketPlayerComponent {
         public DateTime Available;
         public System.Timers.Timer Timer;
@@ -47,15 +46,15 @@ namespace Rocket.Mash.GearUp {
             throw new NotImplementedException();
             }
 
-        public void AskLoadOut(RocketPlayer from = null) {
-            Say(Player, "we were asked loadout.");
+        public void AskGearUp(RocketPlayer from = null) {
+            Say(Player, "we were asked gearup.");
             if ((Available > DateTime.Now) && from == null) {
                 string notReadyMsg = Translations["not_ready"].Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
                 Say(Player, notReadyMsg, Config.ErrorColor);
                 } else {
                 Log("Avail<Now | from != null");
                 Available = DateTime.Now.AddSeconds(Config.CommandCooldown);
-                GiveGearUp(from);
+                GiveGear(from);
                 }
             }
 
@@ -63,22 +62,22 @@ namespace Rocket.Mash.GearUp {
             Timer.Stop();
             Log("Timer popped.");
             if (Active)
-                GiveGearUp();
+                GiveGear();
             }
 
-        private void GiveGearUp(RocketPlayer from = null) {
-            foreach (GearUpEquip loe in GearUp.Instance.Configuration.LoadOutEquipment) {
-                if (Player.GiveItem(loe.EntityId, loe.EntityAmount) == false) {
-                    LogError($"LoadOut> Failed to give {Player.CharacterName} item {loe.EntityId} x{loe.EntityAmount}.");
+        private void GiveGear(RocketPlayer from = null) {
+            foreach (Gear g in GearUp.Instance.Configuration.GearList) {
+                if (Player.GiveItem(g.ID, g.Amount) == false) {
+                    LogError($"GearUp> Failed to give {Player.CharacterName} item {g.ID} x{g.Amount}.");
                     Say(from, Translations["error_message"], Config.ErrorColor);
                     }
                 }
 
             if (from == null) {
-                Say(Player, Translations["loadout_given"], Config.SuccessColor);
+                Say(Player, Translations["gear_given"], Config.SuccessColor);
                 } else {
-                Say(Player, Translations["loadout_gift"].Replace("%P", from.CharacterName), Config.SuccessColor);
-                Say(from, Translations["loadout_gift_success"].Replace("%P", Player.CharacterName), Config.SuccessColor);
+                Say(Player, Translations["gear_gift"].Replace("%P", from.CharacterName), Config.SuccessColor);
+                Say(from, Translations["gear_gift_success"].Replace("%P", Player.CharacterName), Config.SuccessColor);
                 }
             }
         }

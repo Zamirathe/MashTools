@@ -20,17 +20,17 @@ using System;
 
 namespace Rocket.Mash.GearUp {
     [Serializable]
-    public class GearUpEquip {
-        [XmlAttribute("Id")]
-        public ushort EntityId;
+    public class Gear {
+        [XmlAttribute("ID")]
+        public ushort ID;
         [XmlAttribute("Amount")]
-        public byte EntityAmount;
+        public byte Amount;
 
-        public GearUpEquip() { }
+        public Gear() { }
 
-        public GearUpEquip(ushort id, byte amount) {
-            this.EntityId = id;
-            this.EntityAmount = amount;
+        public Gear(ushort id, byte amount) {
+            this.ID = id;
+            this.Amount = amount;
             }
         }
     }

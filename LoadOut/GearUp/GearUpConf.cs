@@ -34,7 +34,7 @@ namespace Rocket.Mash.GearUp {
         [XmlElement("GearGivenColor")]
         public string SColor;
 
-        public List<GearUpEquip> LoadOutEquipment;
+        public List<Gear> GearList;
 
         [XmlIgnore]
         public int FlushInterval = 5;
@@ -65,11 +65,11 @@ namespace Rocket.Mash.GearUp {
                     SpawnDelay = 2,
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
-                    LoadOutEquipment = new List<GearUpEquip>() {
-                        new GearUpEquip(97, 1),
-                        new GearUpEquip(15, 1),
-                        new GearUpEquip(81, 1),
-                        new GearUpEquip(98, 2)
+                    GearList = new List<Gear>() {
+                        new Gear(97, 1),
+                        new Gear(15, 1),
+                        new Gear(81, 1),
+                        new Gear(98, 2)
                         },
                     };
                 }

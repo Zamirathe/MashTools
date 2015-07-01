@@ -58,11 +58,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoadOut\LoadOut.cs" />
-    <Compile Include="LoadOut\LoadOutCommand.cs" />
-    <Compile Include="LoadOut\LoadOutConf.cs" />
-    <Compile Include="LoadOut\LoadOutComp.cs" />
-    <Compile Include="LoadOut\LoadOutEquip.cs" />
+    <Compile Include="GearUp\GearUp.cs" />
+    <Compile Include="GearUp\GearUpCommand.cs" />
+    <Compile Include="GearUp\GearUpConf.cs" />
+    <Compile Include="GearUp\GearUpComp.cs" />
+    <Compile Include="GearUp\Equip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

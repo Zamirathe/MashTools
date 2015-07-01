@@ -80,7 +80,7 @@ namespace Rocket.Mash.GearUp {
 
             if (cmd.Length == 0) {
                 Log($"GearUp> Called by {player.CharacterName}");
-                player.GetComponent<GearUpComp>().AskLoadOut();
+                player.GetComponent<GearUpComp>().AskGearUp();
                 } else {
                 Log("cmd.Length > 0");
                 if (player.HasPermission("GearUp.Other") || player.HasPermission("*")) {
@@ -89,7 +89,7 @@ namespace Rocket.Mash.GearUp {
                         Log("RP.FromName != null");
                         RocketPlayer p = RocketPlayer.FromName(cmd[1]);
                         if (p != null) {
-                            p.GetComponent<GearUpComp>().AskLoadOut(p);
+                            p.GetComponent<GearUpComp>().AskGearUp(p);
                             }
                         }
                     } else {
