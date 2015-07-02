@@ -30,7 +30,7 @@ using Rocket.Unturned.Plugins;
 namespace Rocket.Mash.GearUp {
     public class GearUpCommand : IRocketCommand {
 
-        private enum PERM : byte {
+        private enum PERM : int {
             None = 0,
             Info = 1,
             Self = 2,
@@ -80,21 +80,19 @@ namespace Rocket.Mash.GearUp {
             if (player == null)
                 return;
 
-            PERM perms;// = PERM.None;
+            PERM perms = PERM.None;
+
             if (player.HasPermission(@"gearup.info"))
                 perms = PERM.Info;
 
-            else if (player.HasPermission(@"gearup.self"))
+             if (player.HasPermission(@"gearup.self"))
                 perms = PERM.Self;
 
-            else if (player.HasPermission(@"gearup.other"))
+             if (player.HasPermission(@"gearup.other"))
                 perms = PERM.Other;
 
-            else if (player.HasPermission(@"*") || player.HasPermission(@"gearup.admin") || player.HasPermission(@"gearup.*"))
+             if (player.HasPermission(@"gearup.admin"))
                 perms = PERM.Admin;
-
-            else
-                perms = PERM.None;
 
             if (!Config.AllowCmd) {
                 Say(player, GearUp.Instance.Translations["command_disabled"], Config.ErrorColor);
@@ -102,19 +100,18 @@ namespace Rocket.Mash.GearUp {
                 return;
                 }
 
-            if (perms <= PERM.None && string.Join("", cmd) != "-info") {                
+            if ((int)perms <= (int)PERM.None && string.Join("", cmd) != "-info") {                
                 Say(player, GearUp.Instance.Translations["access_denied"], Color.red);
                 Log($"GU: {player.CharacterName} doesn't have PERM => {perms.ToString()}");
                 return;
                 }
-
             if (cmd?.Length == 0) {
-                if (perms < PERM.Self)
+                if ((int)perms < (int)PERM.Self)
                     return;
                 Log($"GU> Called by {player.CharacterName}");
                 player.GetComponent<GearUpComp>().AskGearUp();
                 } else if (!cmd[0].StartsWith("-")) {
-                if (perms >= PERM.Other && cmd.Length >= 1) {
+                if ((int)perms >= (int)PERM.Other && cmd.Length >= 1) {
                         if (RocketPlayer.FromName(cmd[1]) != null) {
                             RocketPlayer p = RocketPlayer.FromName(cmd[1]);
                             if (p != null) {
@@ -128,33 +125,33 @@ namespace Rocket.Mash.GearUp {
                 } else if (cmd[0].StartsWith("-")) {
                 switch (cmd[0]) {
                     case "-on":
-                        if (perms < PERM.Admin)
+                        if ((int)perms < (int)PERM.Admin)
                             return;
                         GearUp.Instance.enabled = true;
                         Say(player, "GU: Enabled", Config.SuccessColor);
                         break;
 
                     case "-off":
-                        if (perms < PERM.Admin)
+                        if ((int)perms < (int)PERM.Admin)
                             return;
                         GearUp.Instance.enabled = false;
                         Say(player, "GU: Disabled", Config.SuccessColor);
                         break;
 
                     case "-?":
-                        if (perms < PERM.Info)
+                        if ((int)perms < (int)PERM.Info)
                             return;
                         ShowHelp(player);
                         break;
 
                     case "--":
-                        if (perms < PERM.Info)
+                        if ((int)perms < (int)PERM.Info)
                             return;
                         Say(player, $"GU: Plugin {(GearUp.Instance.enabled == true ? "enabled" : "disabled")}.", Color.gray);
                         break;
 
                     case "-reset":
-                        if (perms < PERM.Admin)
+                        if ((int)perms < (int)PERM.Admin)
                             return;
                         if (cmd.Length >= 2) {
                             if (!string.IsNullOrEmpty(cmd[1])) {

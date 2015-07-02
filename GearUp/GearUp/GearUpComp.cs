@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using static Rocket.Unturned.Logging.Logger;
 using static Rocket.Unturned.RocketChat;
+using static Rocket.Mash.GearUp.GearUp;
 
 /*  All code is copyright © 2015 Auria.pw
     Code, and their compiled assemblies, are released (forcefully)
@@ -26,18 +27,13 @@ namespace Rocket.Mash.GearUp {
         public DateTime Available;
         public System.Timers.Timer Timer;
 
-        private Dictionary<string, string> Translations;
-        private GearUpConf Config;
-
         private bool Active {
-            get { return (GearUp.Instance.Loaded && Config.Enabled && Player.HasPermission("GearUp.Self")); }
+            get { return (GearUp.Instance.Loaded && Config.Enabled); }
             }
 
         public void Start() {
-            Config = GearUp.Instance.Configuration;
-            Translations = GearUp.Instance.Translations;
             Available = DateTime.Now;
-            Timer = new System.Timers.Timer(GearUp.Instance.Configuration.SpawnDelay * 1000);
+            Timer = new System.Timers.Timer(Config.SpawnDelay * 1000);
             Timer.Elapsed += Timer_Elapsed;
 
             int items = 0;
@@ -45,16 +41,17 @@ namespace Rocket.Mash.GearUp {
                 items += i.getItemCount();
                 }
 
-            if (items == 0)
-                Timer.Start();
-            else
-                Say(Player, GearUp.Instance.Translations["not_new_player"], Config.InfoColor);
-
+            if (items == 0) {
+                if (Active)
+                    Timer.Start();
+                } else {
+                Say(Player, TDict["not_new_player"], Config.InfoColor);
+                }
             }
 
         public void AskGearUp(RocketPlayer from = null) {
             if ((Available > DateTime.Now) && from == null) {
-                string notReadyMsg = Translations["not_ready"].Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
+                string notReadyMsg = TDict["not_ready"].Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
                 Say(Player, notReadyMsg, Config.ErrorColor);
                 } else {
                 Available = DateTime.Now.AddSeconds(Config.Cooldown);
@@ -77,18 +74,18 @@ namespace Rocket.Mash.GearUp {
             }
 
         private void GiveGear(RocketPlayer from = null) {
-            foreach (Gear g in GearUp.Instance.Configuration.GearList) {
+            foreach (Gear g in Config.GearList) {
                 if (Player.GiveItem(g.ID, g.Amount) == false) {
                     LogError($"GearUp> Failed to give {Player.CharacterName} item {g.ID} x{g.Amount}.");
-                    Say(from, Translations["error_message"], Config.ErrorColor);
+                    Say(from, TDict["error_message"], Config.ErrorColor);
                     }
                 }
 
             if (from == null) {
-                Say(Player, Translations["gear_given"], Config.SuccessColor);
+                Say(Player, TDict["gear_given"], Config.SuccessColor);
                 } else {
-                Say(Player, Translations["gear_gift"].Replace("%P", from.CharacterName), Config.SuccessColor);
-                Say(from, Translations["gear_gift_success"].Replace("%P", Player.CharacterName), Config.SuccessColor);
+                Say(Player, TDict["gear_gift"].Replace("%P", from.CharacterName), Config.SuccessColor);
+                Say(from, TDict["gear_gift_success"].Replace("%P", Player.CharacterName), Config.SuccessColor);
                 }
             }
         }
