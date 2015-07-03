@@ -29,6 +29,7 @@ namespace Rocket.Mash.GearUp {
         public bool AllowCmd;
         public string LoadOutCommand;
         public int Cooldown;
+        public int VIPCooldown;
         [XmlElement("ErrorColor")]
         public string EColor;
         [XmlElement("GearGivenColor")]
@@ -79,6 +80,7 @@ namespace Rocket.Mash.GearUp {
                     Enabled = true,
                     AllowCmd = true,
                     Cooldown = 900,
+                    VIPCooldown = 450,
                     SpawnDelay = 2,
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",

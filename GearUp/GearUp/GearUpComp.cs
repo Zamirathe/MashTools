@@ -35,18 +35,7 @@ namespace Rocket.Mash.GearUp {
             Available = DateTime.Now;
             Timer = new System.Timers.Timer(Config.SpawnDelay * 1000);
             Timer.Elapsed += Timer_Elapsed;
-
-            int items = 0;
-            foreach (SDG.Unturned.Items i in Player.Inventory.Items) {
-                items += i.getItemCount();
-                }
-
-            if (items == 0) {
-                if (Active)
-                    Timer.Start();
-                } else {
-                Say(Player, TDict["not_new_player"], Config.InfoColor);
-                }
+            Timer.Start();
             }
 
         public void AskGearUp(RocketPlayer from = null) {
@@ -54,7 +43,12 @@ namespace Rocket.Mash.GearUp {
                 string notReadyMsg = TDict["not_ready"].Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
                 Say(Player, notReadyMsg, Config.ErrorColor);
                 } else {
-                Available = DateTime.Now.AddSeconds(Config.Cooldown);
+
+                if (Player.HasPermission("gearup.vip"))
+                    Available = DateTime.Now.AddSeconds(Config.VIPCooldown);
+                else
+                    Available = DateTime.Now.AddSeconds(Config.Cooldown);
+
                 GiveGear(from);
                 }
             }
@@ -69,8 +63,17 @@ namespace Rocket.Mash.GearUp {
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
             Timer.Stop();
-            if (Active)
+
+            int items = 0;
+            foreach (SDG.Unturned.Items i in Player.Inventory.Items) {
+                items += i.getItemCount();
+                }
+
+            if (items == 0 && Active) {
                 GiveGear();
+                } else {
+                Say(Player, TDict["not_new_player"], Config.InfoColor);
+                }
             }
 
         private void GiveGear(RocketPlayer from = null) {

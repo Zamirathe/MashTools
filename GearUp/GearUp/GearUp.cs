@@ -27,7 +27,7 @@ using static Rocket.Unturned.RocketChat;
 
 namespace Rocket.Mash.GearUp {
     public class GearUp : RocketPlugin<GearUpConf> {
-        public static Version Version = new Version(0, 0, 6, 0);
+        public static Version Version = new Version(0, 0, 6, 1);
         public static GearUp Instance;
 
         public static GearUpCommand GearUpCmd;
