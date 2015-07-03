@@ -2,8 +2,6 @@
 
 A collection of a few simple tools I had use for on my own server, so I thought I'd share them.
 
-Also, all of my plugins support the '*' permission, so you don't have to add individual permissions
-if you'd prefer just to assign global permission to access everything.
 
 # DeathAnnounce
 
