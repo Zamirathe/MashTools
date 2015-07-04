@@ -46,6 +46,8 @@ gearup.info  | Allows caller to view information on GearUp
 gearup.self  | Allows caller to issue themselves the configured items
 gearup.other | Allows caller to issue themselves and others items
 gearup.admin | Allows caller to enable/disable the plugin, reset cooldowns and issue items to anyone
+-------------|-----
+gearup.vip   | Player/group utilizes alternate "VIP" cooldown. <br/>(Must still give .self, .other or .info permission as well)
 
 
 All "/gearup" commands are aliased as "/gu" and "/gear"
