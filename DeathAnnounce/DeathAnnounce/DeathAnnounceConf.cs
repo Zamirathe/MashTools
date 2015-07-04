@@ -33,23 +33,23 @@ namespace Rocket.Mash.DeathAnnounce {
                 return new DeathAnnounceConf() {
                     Enabled = true,
                     UserMessages = new List<DAUserMsg>() {
-                        new DAUserMsg("BLEEDING", "%P bled out.", "0.5:0.5:0.5"),
-                        new DAUserMsg("BONES", "%P fell to pieces.", "0.5:0.5:0.5"),
-                        new DAUserMsg("FREEZING", "%P missed the defrost cycle.", "0.5:0.5:0.5"),
-                        new DAUserMsg("FOOD", "I think %P was hungry.", "0.5:0.5:0.5"),
-                        new DAUserMsg("WATER", "%P died of thirst.", "0.5:0.5:0.5"),
-                        new DAUserMsg("GUN", "%P was shot dead by %K", "0.5:0.5:0.5", "%P was shot dead."),
-                        new DAUserMsg("MELEE", "%P was axed by %K", "0.5:0.5:0.5", "%P got the axe."),
-                        new DAUserMsg("ZOMBIE", "%P tried making out with a zombie.", "0.5:0.5:0.5"),
-                        new DAUserMsg("SUICIDE", "%P just couldn't take it anymore.", "0.5:0.5:0.5"),
-                        new DAUserMsg("KILL", "%K killed %P.", "0.5:0.5:0.5", "%P was killed."),
-                        new DAUserMsg("INFECTION", "%P died of zombgreen.", "0.5:0.5:0.5"),
-                        new DAUserMsg("PUNCH", "%K knocked %P the f**k out!", "0.5:0.5:0.5", "%P was knocked cold."),
-                        new DAUserMsg("BREATH", "%P forgot to surface for air.", "0.5:0.5:0.5"),
-                        new DAUserMsg("ROADKILL", "%K thought %P was a speedbump.", "0.5:0.5:0.5", "%P was run down."),
-                        new DAUserMsg("VEHICLE", "%P was run down by %K.", "0.5:0.5:0.5", "%P died by vehicle."),
-                        new DAUserMsg("GRENADE", "%P stepped on %K's grenade.", "0.5:0.5:0.5", "%P stepped on a grenade."),
-                        new DAUserMsg("SHRED", "%P wasn't a ninja turtle.", "0.5:0.5:0.5")
+                        new DAUserMsg("BLEEDING", "%P bled out.", "1:0.5:0.5"),
+                        new DAUserMsg("BONES", "%P fell to pieces.", "1:0.5:0.5"),
+                        new DAUserMsg("FREEZING", "%P missed the defrost cycle.", "1:0.5:0.5"),
+                        new DAUserMsg("FOOD", "I think %P was hungry.", "1:0.5:0.5"),
+                        new DAUserMsg("WATER", "%P died of thirst.", "1:0.5:0.5"),
+                        new DAUserMsg("GUN", "%P was shot dead by %K", "1:0.5:0.5", "%P was shot dead."),
+                        new DAUserMsg("MELEE", "%P was axed by %K", "1:0.5:0.5", "%P got the axe."),
+                        new DAUserMsg("ZOMBIE", "%P tried making out with a zombie.", "1:0.5:0.5"),
+                        new DAUserMsg("SUICIDE", "%P just couldn't take it anymore.", "1:0.5:0.5"),
+                        new DAUserMsg("KILL", "%K killed %P.", "1:0.5:0.5", "%P was killed."),
+                        new DAUserMsg("INFECTION", "%P died of zombgreen.", "1:0.5:0.5"),
+                        new DAUserMsg("PUNCH", "%K knocked %P the f**k out!", "1:0.5:0.5", "%P was knocked cold."),
+                        new DAUserMsg("BREATH", "%P forgot to surface for air.", "1:0.5:0.5"),
+                        new DAUserMsg("ROADKILL", "%K thought %P was a speedbump.", "1:0.5:0.5", "%P was run down."),
+                        new DAUserMsg("VEHICLE", "%P was run down by %K.", "1:0.5:0.5", "%P died by vehicle."),
+                        new DAUserMsg("GRENADE", "%P stepped on %K's grenade.", "1:0.5:0.5", "%P stepped on a grenade."),
+                        new DAUserMsg("SHRED", "%P wasn't a ninja turtle.", "1:0.5:0.5")
                         }
                     };
                 }
