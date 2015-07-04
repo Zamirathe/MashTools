@@ -1,6 +1,7 @@
 ﻿using Rocket.Unturned.Player;
 using System;
-using System.Collections.Generic;
+
+//HACK God I love using statics :D
 using static Rocket.Unturned.Logging.Logger;
 using static Rocket.Unturned.RocketChat;
 using static Rocket.Mash.GearUp.GearUp;

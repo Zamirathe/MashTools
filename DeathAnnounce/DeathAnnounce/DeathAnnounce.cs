@@ -62,6 +62,7 @@ namespace Rocket.Mash.DeathAnnounce {
             if (!this.Loaded || !this.Configuration.Enabled)
                 return;
 
+            //TODO need proper steamid conversion, this is ugly
             if (murderer.ToString() == "90071992547409920") { murderer = (Steamworks.CSteamID)0; }
             if (murderer == null) { murderer = (Steamworks.CSteamID)0; }
             
@@ -71,7 +72,7 @@ namespace Rocket.Mash.DeathAnnounce {
 
             string Message="";
 
-            // if Killer is nothing AND we have notempty altMsg
+            //TODO fix edge case killer empty & alt empty (bad user, no biscuit!)
             if (String.IsNullOrEmpty(Killer) && !String.IsNullOrEmpty(CauseLookup[cause].AltMessage)) {
                 Message = CauseLookup[cause].AltMessage.Replace(@"%P", player.CharacterName);
                 } else {
