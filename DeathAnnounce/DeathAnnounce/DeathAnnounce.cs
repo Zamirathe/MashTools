@@ -28,7 +28,7 @@ using System.Collections.Generic;
 
 namespace Rocket.Mash.DeathAnnounce {
     public class DeathAnnounce : RocketPlugin<DeathAnnounceConf> {
-        public static System.Version Version = new Version(0, 0, 3, 1);
+        public static System.Version Version = new Version(0, 0, 3, 2);
         public static DeathAnnounce Instance;
 
         private Dictionary<EDeathCause, DAUserMsg> CauseLookup;
@@ -65,17 +65,17 @@ namespace Rocket.Mash.DeathAnnounce {
             if (murderer.ToString() == "90071992547409920") { murderer = (Steamworks.CSteamID)0; }
             if (murderer == null) { murderer = (Steamworks.CSteamID)0; }
             
-            string Name = string.Empty;
+            string Killer = string.Empty;
             if (murderer.ToString().Length > 1)
-                Name = RocketPlayer.FromCSteamID(murderer)?.CharacterName;
+                Killer = RocketPlayer.FromCSteamID(murderer)?.CharacterName;
 
             string Message="";
 
-            // if name is nothing AND we have notempty altMsg
-            if (String.IsNullOrEmpty(Name) && !String.IsNullOrEmpty(CauseLookup[cause].AltMessage)) {
+            // if Killer is nothing AND we have notempty altMsg
+            if (String.IsNullOrEmpty(Killer) && !String.IsNullOrEmpty(CauseLookup[cause].AltMessage)) {
                 Message = CauseLookup[cause].AltMessage.Replace(@"%P", player.CharacterName);
                 } else {
-                Message = CauseLookup[cause].Message.Replace(@"%K", Name);
+                Message = CauseLookup[cause].Message.Replace(@"%K", Killer);
                 Message = Message.Replace(@"%P", player.CharacterName);
                 }
 
