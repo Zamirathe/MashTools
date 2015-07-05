@@ -63,7 +63,8 @@
     <Compile Include="GearUp\GearUpCommand.cs" />
     <Compile Include="GearUp\GearUpConf.cs" />
     <Compile Include="GearUp\GearUpComp.cs" />
-    <Compile Include="GearUp\Equip.cs" />
+    <Compile Include="GearUp\Gear.cs" />
+    <Compile Include="GearUp\Kit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

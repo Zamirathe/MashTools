@@ -25,6 +25,8 @@ namespace Rocket.Mash.GearUp {
     public class GearUpConf : IRocketPluginConfiguration {
         public bool Enabled;
         public ushort SpawnDelay;
+        [XmlElement("JoinRequireEmptyInventory")]
+        public bool RequireEmpty;
         public bool AllowCmd;
         public string LoadOutCommand;
         public int Cooldown;
@@ -38,8 +40,6 @@ namespace Rocket.Mash.GearUp {
 
         public List<Gear> GearList;
 
-        [XmlIgnore]
-        public int FlushInterval = 5;
         [XmlIgnore]
         public string LoadedText { get { return $"{GearUp.Version} by Mash"; } }
 
@@ -78,12 +78,13 @@ namespace Rocket.Mash.GearUp {
                 return new GearUpConf() {
                     Enabled = true,
                     AllowCmd = true,
+                    RequireEmpty = true,
                     Cooldown = 900,
                     VIPCooldown = 450,
                     SpawnDelay = 2,
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
-                    IColor = "0.2:0.2:0.2",
+                    IColor = "0.8:0.8:0.8",
                     GearList = new List<Gear>() {
                         new Gear(97, 1),
                         new Gear(15, 1),

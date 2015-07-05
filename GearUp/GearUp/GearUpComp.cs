@@ -70,7 +70,7 @@ namespace Rocket.Mash.GearUp {
                 items += i.getItemCount();
                 }
 
-            if (items == 0 && Active) {
+            if ((items == 0 || !Config.RequireEmpty) && Active) {
                 GiveGear();
                 } else {
                 Say(Player, TDict["not_new_player"], Config.InfoColor);
