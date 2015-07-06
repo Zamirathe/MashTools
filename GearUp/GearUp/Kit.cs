@@ -9,6 +9,13 @@ namespace Rocket.Mash.GearUp {
     public class Kit {
         [XmlAttribute("KitName")]
         public string Name;
-        public List<Gear> Equipment;
+        public List<Item> Items;
+
+        public Kit() { }
+
+        public Kit(string name, List<Item> items) {
+            this.Name = name;
+            this.Items = items;
+            }
         }
     }

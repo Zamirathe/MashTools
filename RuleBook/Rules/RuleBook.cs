@@ -54,8 +54,8 @@ namespace Rocket.Mash.RuleBook {
                             toFire.Add(que);
                             }
                     foreach (AnnouncementQueue que in toFire) {
-                        pending.Remove(que);
                         Announce(que.Player);
+                        pending.Remove(que);
                         }
                     }
                 }

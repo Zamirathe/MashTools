@@ -38,7 +38,7 @@ namespace Rocket.Mash.GearUp {
         [XmlElement("InfoColor")]
         public string IColor;
 
-        public List<Gear> GearList;
+        public List<Item> GearList;
 
         [XmlIgnore]
         public string LoadedText { get { return $"{GearUp.Version} by Mash"; } }
@@ -85,11 +85,11 @@ namespace Rocket.Mash.GearUp {
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
                     IColor = "0.8:0.8:0.8",
-                    GearList = new List<Gear>() {
-                        new Gear(97, 1),
-                        new Gear(15, 1),
-                        new Gear(81, 1),
-                        new Gear(98, 2)
+                    GearList = new List<Item>() {
+                        new Item(97, 1),
+                        new Item(15, 1),
+                        new Item(81, 1),
+                        new Item(98, 2)
                         },
                     };
                 }

@@ -20,15 +20,15 @@ using System;
 
 namespace Rocket.Mash.GearUp {
     [Serializable]
-    public class Gear {
+    public class Item {
         [XmlAttribute("ID")]
         public ushort ID;
         [XmlAttribute("Amount")]
         public byte Amount;
 
-        public Gear() { }
+        public Item() { }
 
-        public Gear(ushort id, byte amount) {
+        public Item(ushort id, byte amount) {
             this.ID = id;
             this.Amount = amount;
             }
