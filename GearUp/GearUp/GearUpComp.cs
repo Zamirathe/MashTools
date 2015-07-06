@@ -78,7 +78,7 @@ namespace Rocket.Mash.GearUp {
             }
 
         private void GiveGear(RocketPlayer from = null) {
-            foreach (Item g in Config.GearList) {
+            foreach (Item g in Config.DefaultKit) {
                 if (Player.GiveItem(g.ID, g.Amount) == false) {
                     LogError($"GearUp> Failed to give {Player.CharacterName} item {g.ID} x{g.Amount}.");
                     Say(from, TDict["error_message"], Config.ErrorColor);
