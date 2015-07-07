@@ -72,7 +72,6 @@ namespace Rocket.Mash.DeathAnnounce {
 
             string Message="";
 
-            //TODO fix edge case killer empty & alt empty (bad user, no biscuit!)
             if (String.IsNullOrEmpty(Killer) && !String.IsNullOrEmpty(CauseLookup[cause].AltMessage)) {
                 Message = CauseLookup[cause].AltMessage.Replace(@"%P", player.CharacterName);
                 } else {
