@@ -28,7 +28,7 @@ namespace Rocket.Mash.GearUp
                 mySqlConnection.Open();
                 if (mySqlCommand.ExecuteScalar() == null)
                 {
-                    mySqlCommand.CommandText = string.Concat("CREATE TABLE `", GearUp.Instance.Configuration.TableName, "` (`id` int(11) NOT NULL AUTO_INCREMENT, `steamId` varchar(32) NOT NULL DEFAULT "1", `kitName` varchar(32) NOT NULL, `cooldownTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ");
+                    mySqlCommand.CommandText = string.Concat("CREATE TABLE `", GearUp.Instance.Configuration.TableName, "` (`id` int(11) NOT NULL AUTO_INCREMENT, `steamId` varchar(32) NOT NULL DEFAULT \"1\", `kitName` varchar(32) NOT NULL, `cooldownTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ");
                     mySqlCommand.ExecuteNonQuery();
                 }
                 mySqlConnection.Close();
@@ -65,102 +65,102 @@ namespace Rocket.Mash.GearUp
         internal int AddCooldown(string kitname, string steamId, DateTime time)
         {
         	string mysqlTime = time.ToString("yyyy-MM-dd HH:mm:ss");
-        	int result;
+        	int result = 0;
         	try
         	{
         		MySqlConnection mySqlConnection = this.createConnection();
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandText = string.Concat("select count(*) from `", 
-            	GearUp.Instance.Configuration.TableName, 
-            	"` where steamId='",
-            	steamId,
-            	"' and kitname='",
-            	kitname,
-            	"'");
-            mySqlConnection.Open();
-            result = int.Parse(mySqlCommand.ExecuteScalar());
-            string sql = "";
-            if (result <= 0)
-            {
-            	sql = string.Concat("update `",
-            	GearUp.Instance.Configuration.TableName,
-            	"` set cooldownTime = mysqlTime where steamId='",
-            	steamId,
-            	"' and kitName='",
-            	kitname,
-            	"'");
-            } 
-            else
-            {
-            	sql = string.Concat("insert into `",
-            	GearUp.Instance.Configuration.TableName,
-            	"` (steamId, kitName, cooldownTime) VALUES ('",
-            	steamId,
-            	"', '",
-            	kitname,
-            	"', TIMESTAMP('",
-            	mysqlTime,
-            	"'))");
+                MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
+                mySqlCommand.CommandText = string.Concat("select count(*) from `", 
+            	    GearUp.Instance.Configuration.TableName, 
+            	    "` where steamId='",
+            	    steamId,
+            	    "' and kitname='",
+            	    kitname,
+            	    "'");
+                mySqlConnection.Open();
+                result = int.Parse(mySqlCommand.ExecuteScalar());
+                string sql = "";
+                if (result <= 0)
+                {
+            	    sql = string.Concat("update `",
+            	        GearUp.Instance.Configuration.TableName,
+            	        "` set cooldownTime = mysqlTime where steamId='",
+            	        steamId,
+            	        "' and kitName='",
+            	        kitname,
+            	        "'");
+                } 
+                else
+                {
+            	    sql = string.Concat("insert into `",
+            	        GearUp.Instance.Configuration.TableName,
+            	        "` (steamId, kitName, cooldownTime) VALUES ('",
+            	        steamId,
+            	        "', '",
+            	        kitname,
+            	        "', TIMESTAMP('",
+            	        mysqlTime,
+            	        "'))");
+                }
+                mySqlCommand.CommandText = sql;
+                result = mySqlCommand.ExecuteNonQuery();
+                mySqlConnection.Close();
             }
-            mySqlCommand.CommandText = sql;
-            result = mySqlCommand.ExecuteNonQuery();
-            mySqlConnection.Close();
-          }
-          catch (Exception exception)
-          {
-          	LogException(exception);
-          }
-          return result;
+            catch (Exception exception)
+            {
+          	    LogException(exception);
+            }
+            return result;
         }
 
         internal DateTime? GetCooldown(string kitname, string steamId)
         {
-        	DateTime? result;
+        	DateTime? result = null;
         	try
         	{
         		MySqlConnection mySqlConnection = this.createConnection();
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandText = string.Concat("select cooldownTime from `", 
-            	GearUp.Instance.Configuration.TableName, 
-            	"` where steamId='",
-            	steamId,
-            	"' and kitname='",
-            	kitname,
-            	"'");
-            mySqlConnection.Open();
-            result = DateTime.Parse(mySqlCommand.ExecuteScalar());
-            mySqlConnection.Close();
-          }
-          catch (Exception exception)
-          {
-          	LogException(exception);
-          }
-          return result;
+                MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
+                mySqlCommand.CommandText = string.Concat("select cooldownTime from `", 
+            	    GearUp.Instance.Configuration.TableName, 
+            	    "` where steamId='",
+            	    steamId,
+            	    "' and kitname='",
+            	    kitname,
+            	    "'");
+                mySqlConnection.Open();
+                result = DateTime.Parse(mySqlCommand.ExecuteScalar());
+                mySqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+          	    LogException(exception);
+            }
+            return result;
         }
         
         internal int DeleteCooldown(string kitname, string steamId)
         {
-        	int result;
+        	int result = 0;
         	try
         	{
         		MySqlConnection mySqlConnection = this.createConnection();
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandText = string.Concat("delete from `", 
-            	GearUp.Instance.Configuration.TableName, 
-            	"` where steamId='",
-            	steamId,
-            	"' and kitname='",
-            	kitname,
-            	"'");
-            mySqlConnection.Open();
-            result = mySqlCommand.ExecuteNonQuery();
-            mySqlConnection.Close();
-          }
-          catch (Exception exception)
-          {
-          	LogException(exception);
-          }
-          return result;
+                MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
+                mySqlCommand.CommandText = string.Concat("delete from `", 
+            	    GearUp.Instance.Configuration.TableName, 
+            	    "` where steamId='",
+            	    steamId,
+            	    "' and kitname='",
+            	    kitname,
+            	    "'");
+                mySqlConnection.Open();
+                result = mySqlCommand.ExecuteNonQuery();
+                mySqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+          	    LogException(exception);
+            }
+            return result;
         }
     }
 }
