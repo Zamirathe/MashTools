@@ -163,7 +163,7 @@ namespace Rocket.Mash.GearUp
             return result;
         }
         
-        internal void DeleteAllCooldowns(string steamId, string kitname="Global")
+        internal void DeleteAllCooldowns()
         {
         	try
         	{
