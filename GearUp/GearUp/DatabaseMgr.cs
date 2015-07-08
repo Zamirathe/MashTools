@@ -162,5 +162,24 @@ namespace Rocket.Mash.GearUp
             }
             return result;
         }
+        
+        internal void DeleteAllCooldowns(string steamId, string kitname="Global")
+        {
+        	try
+        	{
+        		MySqlConnection mySqlConnection = this.createConnection();
+                MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
+                mySqlCommand.CommandText = string.Concat("truncate `", 
+            	    GearUp.Instance.Configuration.TableName, 
+            	    "`");
+                mySqlConnection.Open();
+                result = mySqlCommand.ExecuteNonQuery();
+                mySqlConnection.Close();
+            }
+            catch (Exception exception)
+            {
+          	    LogException(exception);
+            }
+        }
     }
 }
