@@ -55,13 +55,26 @@ namespace Rocket.Mash.GearUp {
         private void HookEvents() {
             Unturned.Events.RocketPlayerEvents.OnPlayerRevive += EventPlayerSpawn;
             Unturned.Events.RocketServerEvents.OnServerShutdown += EventServerShutdown;
+            Unturned.Events.RocketServerEvents.OnPlayerDisconnected += EventPlayerDisconnected;
+            Unturned.Events.RocketServerEvents.OnPlayerConnected += EventPlayerConnected;
             }
 
         private void UnregisterEvents() {
             Unturned.Events.RocketPlayerEvents.OnPlayerRevive -= EventPlayerSpawn;
             Unturned.Events.RocketServerEvents.OnServerShutdown -= EventServerShutdown;
+            Unturned.Events.RocketServerEvents.OnPlayerDisconnected -= EventPlayerDisconnected;
+            Unturned.Events.RocketServerEvents.OnPlayerConnected -= EventPlayerConnected;
             }
 
+        private void EventPlayerDisconnected(RocketPlayer player) {
+            this.Database.AddCooldown("Global", player.CSteamID.ToString(), player.GetComponent<GearUpComp>().Available);
+        }
+        
+        private void EventPlayerConnected(RocketPlayer player) {
+            DateTime? cooldown = this.Database.GetCooldown("Global", player.CSteamID.ToString());
+            if (cooldown != null)
+                player.GetComponent<GearUpComp>().Available = cooldown;
+        }
         private void EventServerShutdown() {
             UnregisterEvents();
             }
