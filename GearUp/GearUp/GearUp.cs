@@ -73,7 +73,7 @@ namespace Rocket.Mash.GearUp {
         private void EventPlayerConnected(RocketPlayer player) {
             DateTime? cooldown = this.Database.GetCooldown("Global", player.CSteamID.ToString());
             if (cooldown != null)
-                player.GetComponent<GearUpComp>().Available = cooldown;
+                player.GetComponent<GearUpComp>().Available = cooldown.Value;
         }
         private void EventServerShutdown() {
             UnregisterEvents();
