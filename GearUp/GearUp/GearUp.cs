@@ -29,6 +29,7 @@ namespace Rocket.Mash.GearUp {
     public class GearUp : RocketPlugin<GearUpConf> {
         public static Version Version = new Version(0, 0, 7, 0);
         public static GearUp Instance;
+        public static DatabaseMgr Database;
 
         public static GearUpCommand GearUpCmd;
         public static Dictionary<string, string> TDict;
@@ -36,6 +37,7 @@ namespace Rocket.Mash.GearUp {
 
         protected override void Load() {
             Instance = this;
+            Database = new DatabaseMgr();
             TDict = DefaultTranslations;
             Config = Configuration;
             HookEvents();
