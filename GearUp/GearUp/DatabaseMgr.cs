@@ -24,11 +24,15 @@ namespace Rocket.Mash.GearUp
             {
                 MySqlConnection mySqlConnection = this.createConnection();
                 MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-                mySqlCommand.CommandText = string.Concat("show tables like '", GearUp.Instance.Configuration.TableName, "'");
+                mySqlCommand.CommandText = string.Concat("show tables like '", 
+                    GearUp.Instance.Configuration.TableName, 
+                    "'");
                 mySqlConnection.Open();
                 if (mySqlCommand.ExecuteScalar() == null)
                 {
-                    mySqlCommand.CommandText = string.Concat("CREATE TABLE `", GearUp.Instance.Configuration.TableName, "` (`id` int(11) NOT NULL AUTO_INCREMENT, `steamId` varchar(32) NOT NULL DEFAULT \"1\", `kitName` varchar(32) NOT NULL, `cooldownTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ");
+                    mySqlCommand.CommandText = string.Concat("CREATE TABLE `", 
+                        GearUp.Instance.Configuration.TableName, 
+                        "` (`id` int(11) NOT NULL AUTO_INCREMENT, `steamId` varchar(32) NOT NULL DEFAULT \"1\", `kitName` varchar(32) NOT NULL, `cooldownTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ");
                     mySqlCommand.ExecuteNonQuery();
                 }
                 mySqlConnection.Close();
