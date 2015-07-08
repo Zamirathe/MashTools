@@ -62,7 +62,7 @@ namespace Rocket.Mash.GearUp
             return mySqlConnection;
         }
 
-        internal int AddCooldown(string kitname, string steamId, DateTime time)
+        internal int AddCooldown(DateTime time, string steamId="1", string kitname="Global")
         {
         	string mysqlTime = time.ToString("yyyy-MM-dd HH:mm:ss");
         	int result = 0;
@@ -113,7 +113,7 @@ namespace Rocket.Mash.GearUp
             return result;
         }
 
-        internal DateTime? GetCooldown(string kitname, string steamId)
+        internal DateTime? GetCooldown(string steamId, string kitname="Global")
         {
         	DateTime? result = null;
         	try
@@ -138,7 +138,7 @@ namespace Rocket.Mash.GearUp
             return result;
         }
         
-        internal int DeleteCooldown(string kitname, string steamId)
+        internal int DeleteCooldown(string steamId, string kitname="Global")
         {
         	int result = 0;
         	try
