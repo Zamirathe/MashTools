@@ -24,6 +24,13 @@ namespace Rocket.Mash.GearUp {
     [Serializable]
     public class GearUpConf : IRocketPluginConfiguration {
         public bool Enabled;
+        public bool UseMysql;
+        public string DatabaseAddress; 
+        public string DatabaseName;
+        public string DatabaseUsername; 
+        public string DatabasePassword;
+        public int DatabasePort;
+        public string TableName;
         public ushort SpawnDelay;
         [XmlElement("JoinRequireEmptyInventory")]
         public bool RequireEmpty;
@@ -80,6 +87,13 @@ namespace Rocket.Mash.GearUp {
             get {
                 return new GearUpConf() {
                     Enabled = true,
+                    UseMysql = true,
+                    DatabaseAddress = "localhost", 
+                    DatabaseName = "unturned",
+                    DatabaseUsername = "unturned", 
+                    DatabasePassword = "changeme",
+                    DatabasePort = 3306,
+                    TableName = "gearup",
                     AllowCmd = true,
                     RequireEmpty = true,
                     Cooldown = 900,
