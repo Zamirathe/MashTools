@@ -173,7 +173,7 @@ namespace Rocket.Mash.GearUp
             	    GearUp.Instance.Configuration.TableName, 
             	    "`");
                 mySqlConnection.Open();
-                result = mySqlCommand.ExecuteNonQuery();
+                mySqlCommand.ExecuteNonQuery();
                 mySqlConnection.Close();
             }
             catch (Exception exception)
