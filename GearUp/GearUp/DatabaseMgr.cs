@@ -78,7 +78,7 @@ namespace Rocket.Mash.GearUp
             	    kitname,
             	    "'");
                 mySqlConnection.Open();
-                result = int.Parse(mySqlCommand.ExecuteScalar());
+                result = int.Parse(mySqlCommand.ExecuteScalar().ToString());
                 string sql = "";
                 if (result <= 0)
                 {
@@ -128,7 +128,7 @@ namespace Rocket.Mash.GearUp
             	    kitname,
             	    "'");
                 mySqlConnection.Open();
-                result = DateTime.Parse(mySqlCommand.ExecuteScalar());
+                result = DateTime.Parse(mySqlCommand.ExecuteScalar().ToString());
                 mySqlConnection.Close();
             }
             catch (Exception exception)
