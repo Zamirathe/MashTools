@@ -24,7 +24,6 @@ namespace Rocket.Mash.GearUp {
     [Serializable]
     public class GearUpConf : IRocketPluginConfiguration {
         public bool Enabled;
-        public bool UseMysql;
         public string DatabaseAddress; 
         public string DatabaseName;
         public string DatabaseUsername; 
@@ -87,7 +86,6 @@ namespace Rocket.Mash.GearUp {
             get {
                 return new GearUpConf() {
                     Enabled = true,
-                    UseMysql = true,
                     DatabaseAddress = "localhost", 
                     DatabaseName = "unturned",
                     DatabaseUsername = "unturned", 
