@@ -27,7 +27,7 @@ using static Rocket.Unturned.RocketChat;
 
 namespace Rocket.Mash.GearUp {
     public class GearUp : RocketPlugin<GearUpConf> {
-        public static Version Version = new Version(0, 0, 6, 1);
+        public static Version Version = new Version(0, 0, 7, 0);
         public static GearUp Instance;
 
         public static GearUpCommand GearUpCmd;
@@ -68,9 +68,11 @@ namespace Rocket.Mash.GearUp {
             player.GetComponent<GearUpComp>().Timer.Start();
             }
 
-        private void CriticalError() {
-            Say("GearUp has stopped due to an error.", Color.red);
+        public static void STOP(string err = null) { Instance.CriticalError(err); }
+        private void CriticalError(string err = null) {
             this.Configuration.Enabled = false;
+            Say($"GearUp {Version} has been disabled due to an error.", Color.red);
+            LogError(err);
             }
 
         public override Dictionary<string, string> DefaultTranslations {
@@ -80,6 +82,7 @@ namespace Rocket.Mash.GearUp {
                         { "gear_gift", "GU: It seems %P gave you some stuff." },
                         { "gear_gift_success", "GU: Gear sent to %P." },
                         { "error_message", "GU: An error occurred." },
+                        { "error_user_nokit", "GU: Must specify a kit." },
                         { "access_denied", "GU: No permission." },
                         { "access_denied_gift", "GU: No 'other' permission." },
                         { "command_disabled", "GU: GearUps are spawn only!" },

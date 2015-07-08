@@ -9,12 +9,17 @@ namespace Rocket.Mash.GearUp {
     public class Kit {
         [XmlAttribute("KitName")]
         public string Name;
+
+        [XmlAttribute("GearupPermissionRequired")]
+        public string PermissionGroup;
+
         public List<Item> Items;
 
         public Kit() { }
 
-        public Kit(string name, List<Item> items) {
+        public Kit(string name, string perms, List<Item> items) {
             this.Name = name;
+            this.PermissionGroup = perms;
             this.Items = items;
             }
         }

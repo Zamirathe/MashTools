@@ -1,7 +1,6 @@
 ﻿using Rocket.Unturned.Player;
 using System;
 
-//HACK God I love using statics :D
 using static Rocket.Unturned.Logging.Logger;
 using static Rocket.Unturned.RocketChat;
 using static Rocket.Mash.GearUp.GearUp;
@@ -33,24 +32,32 @@ namespace Rocket.Mash.GearUp {
             }
 
         public void Start() {
+            if (!Active)
+                return;
+
             Available = DateTime.Now;
             Timer = new System.Timers.Timer(Config.SpawnDelay * 1000);
             Timer.Elapsed += Timer_Elapsed;
             Timer.Start();
             }
 
-        public void AskGearUp(RocketPlayer from = null) {
-            if ((Available > DateTime.Now) && from == null) {
+        public void AskGearUp(RocketPlayer from = null, Kit kit = null) {
+            if ((Available > DateTime.Now) && from == null && !Player.HasPermission("gearup.admin")) {
                 string notReadyMsg = TDict["not_ready"].Replace("%S", ((int)(Available - DateTime.Now).TotalSeconds).ToString());
                 Say(Player, notReadyMsg, Config.ErrorColor);
                 } else {
+                // got here because:
+                // Available  OR  from someone else  OR  admin
 
-                if (Player.HasPermission("gearup.vip"))
+                // is VIP, cooldown not -1, not admin
+                if (Player.HasPermission("gearup.vip") && Config.VIPCooldown != -1 && !Player.HasPermission("gearup.admin"))
                     Available = DateTime.Now.AddSeconds(Config.VIPCooldown);
+                else if (Player.HasPermission("gearup.admin"))
+                    Available = DateTime.Now;
                 else
                     Available = DateTime.Now.AddSeconds(Config.Cooldown);
 
-                GiveGear(from);
+                GiveGear(from, kit);
                 }
             }
 
@@ -63,6 +70,9 @@ namespace Rocket.Mash.GearUp {
             }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+            if (!Active)
+                return;
+
             Timer.Stop();
 
             int items = 0;
@@ -77,8 +87,11 @@ namespace Rocket.Mash.GearUp {
                 }
             }
 
-        private void GiveGear(RocketPlayer from = null) {
-            foreach (Item g in Config.DefaultKit) {
+        private void GiveGear(RocketPlayer from = null, Kit kit = null) {
+            if (kit == null)
+                kit = Config.DefaultKit;
+
+            foreach (Item g in kit.Items) {
                 if (Player.GiveItem(g.ID, g.Amount) == false) {
                     LogError($"GearUp> Failed to give {Player.CharacterName} item {g.ID} x{g.Amount}.");
                     Say(from, TDict["error_message"], Config.ErrorColor);

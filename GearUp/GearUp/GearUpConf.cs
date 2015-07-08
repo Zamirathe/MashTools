@@ -28,7 +28,7 @@ namespace Rocket.Mash.GearUp {
         [XmlElement("JoinRequireEmptyInventory")]
         public bool RequireEmpty;
         public bool AllowCmd;
-        public string LoadOutCommand;
+        //public string LoadOutCommand;
         public int Cooldown;
         public int VIPCooldown;
         [XmlElement("ErrorColor")]
@@ -38,7 +38,10 @@ namespace Rocket.Mash.GearUp {
         [XmlElement("InfoColor")]
         public string IColor;
 
-        public List<Item> DefaultKit;
+        public Kit DefaultKit;
+
+        [XmlArray("Kits")]
+        public List<Kit> UserKits;
 
         [XmlIgnore]
         public string LoadedText { get { return $"{GearUp.Version} by Mash"; } }
@@ -84,13 +87,33 @@ namespace Rocket.Mash.GearUp {
                     SpawnDelay = 2,
                     EColor = "1.0:0.0:1.0",
                     SColor = "0.0:0.8:0.0",
-                    IColor = "0.8:0.8:0.8",
-                    DefaultKit = new List<Item>() {
-                        new Item(97, 1),
-                        new Item(15, 1),
-                        new Item(81, 1),
-                        new Item(98, 2)
+                    IColor = "0.8:0.8:0",
+                    DefaultKit = new Kit() {
+                        Name = "OnJoin",
+                        //PermissionGroup = "",
+                        Items = new List<Item>() {
+                            new Item(97, 1),
+                            new Item(15, 1),
+                            new Item(81, 1),
+                            new Item(98, 2)
+                            },
                         },
+                    UserKits = new List<Kit>() {
+                        new Kit() {
+                            Name = "food",
+                            PermissionGroup = "self",
+                            Items = new List<Item>() {
+                                new Item() {
+                                    ID = 91,
+                                    Amount = 1,
+                                    },
+                                new Item() {
+                                    ID = 83,
+                                    Amount = 1
+                                    },
+                                },
+                            },
+                        }
                     };
                 }
             }
